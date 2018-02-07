@@ -1,7 +1,7 @@
 <template>
-    <nav>
-      <ul>
-        <li v-for="list in listdata">{{ list }}</li>
+    <nav class="">
+      <ul class="newlists">
+        <li v-for="list in listdata" class="newtype">{{ list }}</li>
       </ul>
     </nav>
 </template>
@@ -28,5 +28,10 @@
 </script>
 
 <style scoped rel='stylesheet/scss' lang="scss">
-
+  .newlists{
+    .newtype{
+      display: inline-block;
+      padding: 10px;
+    }
+  }
 </style>

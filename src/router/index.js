@@ -6,15 +6,15 @@ Vue.use(Router)
 
 export default new Router({
   routes: [
-    // {
-    //   path: '/',
-    //   name: 'HelloWorld',
-    //   component: HelloWorld
-    // },
     {
       path: '/',
-      name:'listNav',
-      component: () => import('../components/listNav.vue')
+      name: 'main',
+      component: () => import('../components/container.vue')
     }
+    // {
+    //   path: '/listNav',
+    //   name:'listNav',
+    //   component: () => import('../components/listNav.vue')
+    // }
   ]
 })
