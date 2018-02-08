@@ -15,7 +15,7 @@ import {
   Button,
   Cell,
   TabContainer,
-  TabContainerItem } from  'mint-ui'
+  TabContainerItem } from  'mint-ui';
 Vue.use(Button)
 Vue.use(Cell)
 Vue.use(TabContainer)

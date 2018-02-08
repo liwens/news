@@ -40,7 +40,6 @@
           }
           requestNewList(params).then((res)=> {
             this.listdata = res;
-            this.set_list_typs(res);
           })
         }
       },
