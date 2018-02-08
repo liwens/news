@@ -1,14 +1,10 @@
 <template>
-  <mt-tab-container v-model="active" :swipeable=true>
-    <mt-tab-container-item id="tab-container1">
-      1
-    </mt-tab-container-item>
-    <mt-tab-container-item id="tab-container2">
-      2
-    </mt-tab-container-item>
-    <mt-tab-container-item id="tab-container3">
-      3
-    </mt-tab-container-item>
+  <mt-tab-container :value="activetype" :swipeable=true>
+    <template v-for="type in listTypes">
+      <mt-tab-container-item :id="type" class="item">
+        {{ type }}
+      </mt-tab-container-item>
+    </template>
 
   </mt-tab-container>
 
@@ -16,21 +12,52 @@
 
 <script>
   import {TabContainer, TabContainerItem} from 'mint-ui';
+  import {requestTypeList} from '../api/requestTypeList';
+  import {mapGetters} from 'vuex'
 
   export default {
     name: "news-list",
-    data(){
+    data() {
       return {
-        active:"tab-container3"
+        activetype: ''
       }
+    },
+    computed: {
+      ...mapGetters([
+        'listTypes',
+        'curType'
+      ])
+    },
+    watch: {
+      curType: function (newType) {
+        this.activetype = newType;
+      }
+    },
+    mounted() {
+      this.setActiveType()
     },
     components: {
       "mtTabContainer": TabContainer,
       "mtTabContainerItem": TabContainerItem
+    },
+    methods: {
+      /**
+       * 请求新闻分类列表，设置当前频道
+       * */
+      setActiveType() {
+        this.$nextTick(() => {
+          requestTypeList().then((res) => {
+            this.activetype = res[0];
+          })
+        })
+      }
     }
   }
 </script>
 
 <style scoped rel='stylesheet/scss' lang="scss">
+  .item{
+    height: 400px;
 
+  }
 </style>

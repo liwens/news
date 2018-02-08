@@ -1,7 +1,7 @@
 <template>
     <nav class="list_nav">
       <ul class="new_lists">
-        <li v-for="list in listdata" class="new_type" @click="onRequestNewList(list)">{{ list }}</li>
+        <li v-for="list in listdata" class="new_type" @click="onClickAndChangeType(list)">{{ list }}</li>
       </ul>
     </nav>
 </template>
@@ -23,24 +23,17 @@
       this.$nextTick(() =>{
         requestTypeList().then((res)=> {
           this.listdata = res;
+          this.set_list_typs(res);
         })
       })
     },
     methods: {
-      onRequestNewList(list) {
-        console.log(list)
-        // list  = encodeURI(encodeURI(list));
-        let parames = {
-          type: list,
-          page:1
-        };
-
-        requestNewList(parames).then((res)=> {
-          console.log(res);
-        })
+      onClickAndChangeType(list) {
+        this.set_news_type(list);
       },
       ...mapMutations({
-        set_news_type: types.SET_CUR_TYPE
+        set_news_type: types.SET_CUR_TYPE,
+        set_list_typs: types.SET_LIST_TYPES
       })
     }
   }

@@ -2,6 +2,7 @@
   <div>
     <!--分类列表-->
     <list-nav></list-nav>
+
     <!--新闻详细列表-->
     <news-list></news-list>
   </div>
