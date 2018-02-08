@@ -7,12 +7,19 @@ import router from './router'
 import axios from 'axios';
 Vue.prototype.$axios = axios;
 
+import store from './store'
+
 import './common/sass/index.scss';
 
-import {Button, Cell} from  'mint-ui'
+import {
+  Button,
+  Cell,
+  TabContainer,
+  TabContainerItem } from  'mint-ui'
 Vue.use(Button)
 Vue.use(Cell)
-
+Vue.use(TabContainer)
+Vue.use(TabContainerItem)
 
 Vue.config.productionTip = false
 
@@ -21,6 +28,7 @@ Vue.config.productionTip = false
 export let vue =  new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })
