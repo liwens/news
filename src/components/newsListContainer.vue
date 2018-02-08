@@ -68,7 +68,7 @@
 
 <style scoped rel='stylesheet/scss' lang="scss">
   .item{
-    height: 400px;
+
 
   }
 </style>
