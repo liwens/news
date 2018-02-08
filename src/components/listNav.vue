@@ -1,16 +1,17 @@
 <template>
     <nav class="list_nav">
       <ul class="new_lists">
-        <li v-for="list in listdata" class="new_type" @click="onClickAndChangeType(list)">{{ list }}</li>
+        <li v-for="list in listdata" class="new_type" @click="onClickAndChangeType(list)" :class="{active:curType == list}">{{ list }}</li>
       </ul>
     </nav>
 </template>
 
 <script>
   import {requestTypeList} from '../api/requestTypeList';
-  import {requestNewList} from '../api/requestNewList'
-  import {mapMutations} from 'vuex'
+
+  import {mapMutations, mapGetters} from 'vuex'
   import * as types from '../store/mutation-types'
+
   export default {
     name: "list-nav",
     data(){
@@ -18,6 +19,11 @@
         listdata: []
       }
 
+    },
+    computed: {
+      ...mapGetters([
+        'curType'
+      ])
     },
     created() {
       this.$nextTick(() =>{
@@ -51,7 +57,6 @@
     &::-webkit-scrollbar{
       display: none;
     }
-
     .new_lists{
       background:#f4f5f6;
       width:2050px;
@@ -60,6 +65,12 @@
         text-align:center;
         padding:10px 16px;
         font-size:16px;
+
+        &.active{
+          color: $color-theme;
+          -webkit-box-sizing:border-box;
+          border-bottom:2px solid $color-theme-d !important;
+        }
       }
     }
   }

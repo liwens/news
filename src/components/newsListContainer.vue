@@ -1,8 +1,8 @@
 <template>
-  <mt-tab-container :value="activetype" :swipeable=true>
+  <mt-tab-container v-model="activetype" :swipeable=true>
     <template v-for="type in listTypes">
       <mt-tab-container-item :id="type" class="item">
-        {{ type }}
+        <news-list :type="type"></news-list>
       </mt-tab-container-item>
     </template>
 
@@ -13,10 +13,11 @@
 <script>
   import {TabContainer, TabContainerItem} from 'mint-ui';
   import {requestTypeList} from '../api/requestTypeList';
-  import {mapGetters} from 'vuex'
+  import {mapGetters, mapMutations} from 'vuex'
+  import * as types from '../store/mutation-types'
+  import NewsList from './newsList';
 
   export default {
-    name: "news-list",
     data() {
       return {
         activetype: ''
@@ -31,6 +32,12 @@
     watch: {
       curType: function (newType) {
         this.activetype = newType;
+      },
+      /**
+       * 滑动时，修改state的值
+       * */
+      activetype: function (curtype) {
+        this.set_news_type(curtype);
       }
     },
     mounted() {
@@ -38,7 +45,8 @@
     },
     components: {
       "mtTabContainer": TabContainer,
-      "mtTabContainerItem": TabContainerItem
+      "mtTabContainerItem": TabContainerItem,
+      NewsList
     },
     methods: {
       /**
@@ -50,7 +58,10 @@
             this.activetype = res[0];
           })
         })
-      }
+      },
+      ...mapMutations({
+        set_news_type: types.SET_CUR_TYPE,
+      })
     }
   }
 </script>
