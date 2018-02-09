@@ -41,20 +41,16 @@
     },
     methods: {
       setULwidth() {
-        this.$nextTick( () =>{
+        this.$nextTick(() => {
           let ul = document.querySelector('.new_lists'),
-
-            // let li = document.getElementsByClassName('.new_type');
             li = ul.querySelectorAll('li.new_type');
           console.log(ul);
           console.log(li);
           let liWidth = 0;
-          for( let i=0; i<li.length; i++){
-            // console.log(li[i].getBoundingClientRect().width)
+          for (let i = 0; i < li.length; i++) {
             liWidth += li[i].getBoundingClientRect().width;
           }
           ul.style.width = liWidth + "px";
-          // console.log(ul.offsetWidth);
         })
 
       },
@@ -69,33 +65,31 @@
         this.$nextTick(() => {
           let dom = document.querySelector('.active');
           let ul = document.querySelector('.new_lists');
-          // let li = ul.querySelectorAll('.new_type');
           let window_offsetWidth = window.innerWidth; //屏幕宽度;
-          // let speed = 0,timer=null;
           if (dom) {
             let
               //中间位置的left =( 屏幕宽度 - li宽度 ) / 2;
               diffWidth = (window_offsetWidth - dom.getBoundingClientRect().width) / 2,
               //目标值 = offsetLeft - 中间值的left
               targetOffset = dom.offsetLeft - diffWidth;
-
-             console.log(window_offsetWidth);
-             console.log(ul.getBoundingClientRect().width);
-            console.log(ul.getBoundingClientRect().left);
-
-            if (targetOffset < 0 ) {
-
+            //开始
+            if (targetOffset < 0) {
               ul.style.tranform = `translateX(0px)`;
               return;
             }
-            else{
-              ul.style.transform = `translateX(${-targetOffset}px)`;
-
-              // Velocity(ul,{left:-targetOffset},
-              //   {duration:400},
-              //   { easing:"swing"});
+            //结束
+            if(targetOffset > ul.getBoundingClientRect().width - diffWidth) {
+              alert('到了！')
+              // ul.style.tranform = `translateX(${ul.getBoundingClientRect().width - diffWidth}px)`;
+              return;
             }
+            console.log(' ul.getBoundingClientRect().width - diffWidth')
+            console.log("宽度" + ul.getBoundingClientRect().width)
+            console.log('left:' + ul.getBoundingClientRect().left)
+            console.log('li:'+ dom.offsetLeft)
+            console.log("目标值：" + targetOffset)
 
+            ul.style.transform = `translateX(${-targetOffset}px)`;
           }
         })
       }
@@ -107,18 +101,20 @@
   @import "../common/sass/variable";
 
   .list_nav {
-    position: relative;
+    position: fixed;
+
+    z-index: 100;
     border-top: 1px solid $color-theme;
     border-bottom: 1px solid #dddddd;
-    height: 38px;
-    /*overflow: hidden;*/
+    height: $nav-height;
     overflow-x: scroll;
-    background: $color-text-d;
+    background: $color-text-nd;
+
     &::-webkit-scrollbar {
       display: none;
     }
     .new_lists {
-      position: absolute;
+      /*position: absolute;*/
       background: #f4f5f6;
       .new_type {
         display: inline-block;

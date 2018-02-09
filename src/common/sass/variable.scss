@@ -1,6 +1,7 @@
 //颜色定义规范
 $color-theme: rgb(215,95,100);
 $color-theme-d: rgb(229,150,115);
+$color-text-nd: rgb(240,240,240);
 $color-text-d : rgba(255, 255, 255, 0.3);
 $color-text-l : rgba(255, 255, 255, 0.5);
 $color-text-ll : rgba(255, 255, 255, 0.7);
@@ -14,3 +15,5 @@ $font-size-medium-x : 16px;
 $font-size-large : 18px;
 $font-size-large-x: 22px;
 
+//公共样式
+$nav-height: 38px;

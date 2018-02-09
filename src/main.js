@@ -17,18 +17,16 @@ import {
   Cell,
   TabContainer,
   TabContainerItem ,
-  InfiniteScroll
+  InfiniteScroll,
+  Spinner
 } from  'mint-ui';
 Vue.use(Button)
 Vue.use(Cell)
 Vue.use(TabContainer)
 Vue.use(TabContainerItem)
 Vue.use(InfiniteScroll)
-
-Vue.use(VueLazyload,{
-  error:'assets/error.png',
-  loading:'assets/loading.png'
-});
+Vue.use(Spinner)
+Vue.use(VueLazyload);
 
 Vue.config.productionTip = false
 
