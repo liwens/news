@@ -13,7 +13,7 @@
               <time class="time">{{ data.time }}</time>
             </div>
           </div>
-          <img class="photo" v-lazy="data.img">
+          <img class="photo" v-if="data.img" v-lazy="data.img">
         </li>
       </template>
 
@@ -70,7 +70,7 @@
           };
           this.loading = true
           requestNewList(params).then((res) => {
-
+            console.log(res)
             if(this.listdata.length == 0) {
               this.listdata = res
             }else{
