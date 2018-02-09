@@ -1,20 +1,20 @@
 <template>
   <section>
-    <ul>
-      <!--{{type}}-->
-      <!--{{listdata}}-->
+    <ul
+      v-infinite-scroll="getnewsData"
+      infinite-scroll-disabled="thisLoading"
+      infinite-scroll-distanc=10
+    >
       <template v-for="data in listdata">
-        <li class="detail_list">
+        <li class="detail_list" @click="toNewsContent(data.id)">
           <div class="content">
             <h1 class="title">{{ data.title }}</h1>
             <div class="abstract">
               <div class="type">{{ data.type }}</div>
-              <div class="time">{{ data.time }}</div>
+              <time class="time">{{ data.time }}</time>
             </div>
           </div>
-
           <img class="photo" v-lazy="data.img">
-
         </li>
         <!--<img src="" alt="" v-if="data.img=''">-->
       </template>
@@ -25,7 +25,8 @@
 
 <script>
   import {requestNewList} from '../api/requestNewList'
-  import {mapGetters} from 'vuex'
+  import {mapGetters} from 'vuex';
+  import {thinArr} from "../common/js/tool";
   // import Lazy from 'vue-lazyload'
   export default {
     name: "test",
@@ -36,25 +37,47 @@
     data() {
       return {
         listdata: [],
-        page: 1
+        page: 1,
+        loading: false
+      }
+    },
+    computed: {
+      thisLoading() {
+        return this.loading && this.type == this.curType;
       }
     },
     watch: {
       curType: function (newType) {
         if (newType === this.type) {
+          console.log(newType)
+          console.log('当前:'+this.type)
           this.getnewsData();
         }
       }
     },
     methods: {
+      toNewsContent(id) {
+        this.$router.push({path: `/content/${id}`})
+      },
       getnewsData() {
-        let params = {
-          page: this.page,
-          type: this.type
+        if(this.curType == this.type) {
+          let params = {
+            page: this.page,
+            type: this.type
+          }
+          requestNewList(params).then((res) => {
+            this.loading = true
+            if(this.listdata.length == 0) {
+              this.listdata = res
+            }else{
+              this.listdata.push(res);
+              this.listdata = thinArr(this.listdata);
+            }
+            this.loading = false;
+            this.page++
+          })
         }
-        requestNewList(params).then((res) => {
-          this.listdata = res;
-        })
+
       }
     },
     computed: {

@@ -1,10 +1,13 @@
 <template>
   <mt-tab-container v-model="activetype" :swipeable=true>
-    <template v-for="type in listTypes">
-      <mt-tab-container-item :id="type" class="item">
-        <news-list :type="type"></news-list>
-      </mt-tab-container-item>
-    </template>
+
+      <template v-for="type in listTypes">
+        <keep-alive>
+        <mt-tab-container-item :id="type" class="item">
+          <news-list :type="type"></news-list>
+        </mt-tab-container-item>
+        </keep-alive>
+      </template>
 
   </mt-tab-container>
 

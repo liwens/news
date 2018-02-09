@@ -10,7 +10,6 @@
 
 <script>
   import {requestTypeList} from '../api/requestTypeList';
-
   import {mapMutations, mapGetters} from 'vuex'
   import * as types from '../store/mutation-types'
 
@@ -41,6 +40,9 @@
         })
       })
     },
+    mounted() {
+
+    },
     methods: {
       onClickAndChangeType(list) {
         this.set_news_type(list);
@@ -60,13 +62,13 @@
               diffWidth = (window_offsetWidth - dom.getBoundingClientRect().width) / 2,
               //目标值 = offset - 中间值
               targetOffset = domoffsetWidth - diffWidth;
-            console.log(ul.getBoundingClientRect())
             if (targetOffset < 0) {
-              ul.style.left = '0px';
+              // ul.style.left = '0px';
+              ul.style.transform = `translateX(0px)`;
               return;
             }
-            ul.style.left = -targetOffset + 'px'
-
+            // ul.style.left = -targetOffset + 'px'
+            ul.style.transform = `translateX(${-targetOffset}px)`;
             // console.log(`ul left:` + ul.getBoundingClientRect().left)
             // console.log(`bounding:` + boundingLeft)
             // console.log('offsetLeft: ' + dom.offsetLeft)
@@ -95,8 +97,8 @@
       position: absolute;
 
       background: #f4f5f6;
-      /*width: 2050px;*/
-      /*min-width: 2050px;*/
+      width: 2050px;
+      min-width: 2050px;
       .new_type {
         display: inline-block;
         text-align: center;
