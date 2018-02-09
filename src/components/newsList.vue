@@ -1,8 +1,7 @@
 <template>
   <section>
     <ul>
-      <!--{{type}}-->
-      <!--{{listdata}}-->
+
       <template v-for="data in listdata">
         <li class="detail_list">
           <div class="content">
@@ -26,13 +25,15 @@
 <script>
   import {requestNewList} from '../api/requestNewList'
   import {mapGetters} from 'vuex'
-  // import Lazy from 'vue-lazyload'
+
+
+
   export default {
     name: "test",
     props: {
       type: ''
     },
-    components: {},
+
     data() {
       return {
         listdata: [],
@@ -54,8 +55,10 @@
         }
         requestNewList(params).then((res) => {
           this.listdata = res;
+          this.page++
         })
-      }
+      },
+
     },
     computed: {
       ...mapGetters([

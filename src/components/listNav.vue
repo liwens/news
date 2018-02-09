@@ -1,6 +1,6 @@
 <template>
   <nav class="list_nav">
-    <ul class="new_lists">
+    <ul class="new_lists" ref="ul">
       <li v-for="list in listdata" class="new_type" @click="onClickAndChangeType(list)"
           :class="{active:curType == list}">{{ list }}
       </li>
@@ -10,7 +10,7 @@
 
 <script>
   import {requestTypeList} from '../api/requestTypeList';
-
+  import {velocity} from 'velocity-animate';
   import {mapMutations, mapGetters} from 'vuex'
   import * as types from '../store/mutation-types'
 
@@ -38,10 +38,31 @@
         requestTypeList().then((res) => {
           this.listdata = res;
           this.set_list_typs(res);
+          this.setULwidth();
         })
       })
     },
+    mounted(){
+    },
     methods: {
+      setULwidth() {
+        this.$nextTick( () =>{
+          let ul = document.querySelector('.new_lists'),
+
+            // let li = document.getElementsByClassName('.new_type');
+            li = ul.querySelectorAll('li.new_type');
+          console.log(ul);
+          console.log(li);
+          let liWidth = 0;
+          for( let i=0; i<li.length; i++){
+            // console.log(li[i].getBoundingClientRect().width)
+            liWidth += li[i].getBoundingClientRect().width;
+          }
+          ul.style.width = liWidth + "px";
+          // console.log(ul.offsetWidth);
+        })
+
+      },
       onClickAndChangeType(list) {
         this.set_news_type(list);
       },
@@ -52,24 +73,36 @@
       moveNav() {
         this.$nextTick(() => {
           let dom = document.querySelector('.active');
-          let ul = document.querySelector('.new_lists')
+          let ul = document.querySelector('.new_lists');
+          // let li = ul.querySelectorAll('.new_type');
           let window_offsetWidth = window.innerWidth; //屏幕宽度;
+          // let speed = 0,timer=null;
           if (dom) {
-            let domoffsetWidth = dom.offsetLeft,
-              //中间值 =( 屏幕宽度 - li宽度 ) / 2;
+            let
+              //中间位置的left =( 屏幕宽度 - li宽度 ) / 2;
               diffWidth = (window_offsetWidth - dom.getBoundingClientRect().width) / 2,
-              //目标值 = offset - 中间值
-              targetOffset = domoffsetWidth - diffWidth;
-            console.log(ul.getBoundingClientRect())
-            if (targetOffset < 0) {
-              ul.style.left = '0px';
+              //目标值 = offsetLeft - 中间值的left
+              targetOffset = dom.offsetLeft - diffWidth;
+
+             console.log(window_offsetWidth);
+             console.log(ul.getBoundingClientRect().width);
+            console.log(ul.getBoundingClientRect().left);
+
+            if (targetOffset < 0 ) {
+
+              ul.style.tranform = `translateX(0px)`;
               return;
             }
-            ul.style.left = -targetOffset + 'px'
+            else{
+              ul.style.transform = `translateX(${-targetOffset}px)`;
 
-            // console.log(`ul left:` + ul.getBoundingClientRect().left)
-            // console.log(`bounding:` + boundingLeft)
-            // console.log('offsetLeft: ' + dom.offsetLeft)
+              // Velocity(ul,{left:-targetOffset},
+              //   {duration:400},
+              //   { easing:"swing"});
+            }
+
+
+
           }
         })
       }
@@ -95,8 +128,6 @@
       position: absolute;
 
       background: #f4f5f6;
-      /*width: 2050px;*/
-      /*min-width: 2050px;*/
       .new_type {
         display: inline-block;
         text-align: center;
