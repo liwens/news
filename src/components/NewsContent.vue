@@ -1,12 +1,14 @@
 <template>
-  <div>新闻详细页<br/>
-  {{contentData}}
+  <div>
+    <h1>{{contentData.title}}</h1>
+    <article ref="content"></article>
   </div>
 
 </template>
 
 <script>
-  import {requestNewContent}from '../api/requestNewsContent'
+  import {requestNewContent} from '../api/requestNewsContent'
+
   export default {
     name: "news-content",
     created() {
@@ -21,15 +23,18 @@
       }
     },
     methods: {
-      getContent(){
+      getContent() {
         let id = this.$route.params.id;
         let params = {
           id
         }
         requestNewContent(params).then((res) => {
           this.contentData = res;
+          this.$nextTick(() => {
+            this.$refs.content.innerHTML = res.html;
+          })
           console.log(res)
-        }).catch((err)=> {
+        }).catch((err) => {
           console.log(err)
         })
       }
