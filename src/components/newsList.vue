@@ -15,7 +15,7 @@
               <time class="time">{{ data.time }}</time>
             </div>
           </div>
-          <img class="photo" v-lazy="data.img">
+          <img class="photo" v-if="data.img" v-lazy="data.img">
         </li>
         <!--<img src="" alt="" v-if="data.img=''">-->
       </template>
