@@ -5,6 +5,7 @@
       infinite-scroll-disabled="thisLoading"
       infinite-scroll-distanc=10
     >
+
       <template v-for="data in listdata">
         <li class="detail_list" @click="toNewsContent(data.id)">
           <div class="content">
@@ -25,6 +26,7 @@
 
 <script>
   import {requestNewList} from '../api/requestNewList'
+
   import {mapGetters} from 'vuex';
   import {thinArr} from "../common/js/tool";
   // import Lazy from 'vue-lazyload'
@@ -33,7 +35,7 @@
     props: {
       type: ''
     },
-    components: {},
+
     data() {
       return {
         listdata: [],
@@ -78,7 +80,9 @@
           })
         }
 
+
       }
+
     },
     computed: {
       ...mapGetters([
