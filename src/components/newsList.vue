@@ -56,8 +56,14 @@
     watch: {
       curType: function (newType) {
         if (newType === this.type) {
-          this.reCoverScroll();
           this.getnewsData();
+          //避免当前频道，滚动条被重置
+          console.log("上个频道："+ sessionStorage.getItem('lastType'))
+          console.log("当前频道："+ newType)
+          if(sessionStorage.getItem('lastType') && sessionStorage.getItem('lastType') !== newType) {
+            // alert('重置滚动条')
+            this.reCoverScroll();
+          }
         }
       }
     },
@@ -65,6 +71,9 @@
 
     },
     methods: {
+      /**
+       * 重设滚动条到顶部
+       * */
       reCoverScroll() {
         if (document.documentElement.scrollTop) {
           document.documentElement.scrollTop = 0
@@ -147,8 +156,12 @@
           .title {
             font-size: $font-size-medium-x;
             line-height: 22px;
-            height: 44px;
+            height: 40px;
             overflow: hidden;
+            text-overflow: ellipsis;
+            word-break: break-all;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp:2;
             /*display:-webkit-box;*/
             /*-webkit-box-orient:vertical;*/
             /*-webkit-line-clamp:2;*/

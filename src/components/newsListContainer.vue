@@ -62,7 +62,7 @@
       setActiveType() {
         this.$nextTick(() => {
           requestTypeList().then((res) => {
-            this.activetype = res[0];
+            this.activetype = sessionStorage.getItem('curType') ? sessionStorage.getItem('curType') : res[0];
           })
         })
       },

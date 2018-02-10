@@ -40,13 +40,10 @@
       })
     },
     methods: {
-
       setULwidth() {
         this.$nextTick(() => {
           let ul = document.querySelector('.new_lists'),
             li = ul.querySelectorAll('li.new_type');
-          console.log(ul);
-          console.log(li);
           let liWidth = 0;
           for (let i = 0; i < li.length; i++) {
             liWidth += li[i].getBoundingClientRect().width;
@@ -57,6 +54,10 @@
       },
       onClickAndChangeType(list) {
         this.set_news_type(list);
+        if(sessionStorage.getItem('curType')){
+          sessionStorage.setItem('lastType', sessionStorage.getItem('curType'))
+        }
+        sessionStorage.setItem('curType', list)
       },
       ...mapMutations({
         set_news_type: types.SET_CUR_TYPE,
