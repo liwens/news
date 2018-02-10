@@ -1,6 +1,6 @@
 <template>
   <section class="news_Container" ref="news_Container">
-    <mt-tab-container v-model="activetype" :swipeable=true>
+    <mt-tab-container v-model="activetype" :swipeable=false>
       <template v-for="type in listTypes">
         <keep-alive>
           <mt-tab-container-item :id="type" class="item">

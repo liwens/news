@@ -22,7 +22,7 @@
     },
     watch: {
       curType: function (newtype) {
-        this.moveNav()
+        // this.moveNav()
       }
     },
     computed: {
@@ -40,6 +40,7 @@
       })
     },
     methods: {
+
       setULwidth() {
         this.$nextTick(() => {
           let ul = document.querySelector('.new_lists'),
@@ -103,14 +104,16 @@
   @import "../common/sass/variable";
 
   .list_nav {
-    position: relative;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
     z-index: 100;
     border-top: 1px solid $color-theme;
     border-bottom: 1px solid #dddddd;
     height: $nav-height;
     overflow-x: scroll;
     background: $color-text-nd;
-
     &::-webkit-scrollbar {
       display: none;
     }

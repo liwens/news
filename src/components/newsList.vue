@@ -62,6 +62,9 @@
         }
       }
     },
+    mounted() {
+
+    },
     methods: {
       reCoverScroll() {
         if(document.documentElement.scrollTop) {
@@ -125,6 +128,7 @@
       background-color: $color-text-nd;
     }
     ul {
+      margin-top: $nav-height;
       width: 100%;
       overflow: auto;
       padding: 0 10px;
