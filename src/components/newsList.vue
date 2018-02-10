@@ -16,15 +16,19 @@
           <div class="photo" v-if="data.img">
             <img v-lazy="data.img">
           </div>
-
         </li>
       </template>
-
     </ul>
     <i class="loading" v-if="loading">
       <mt-spinner type="snake" color="rgb(229,150,115)"></mt-spinner>
     </i>
+    <mt-popup
+      v-model=noData
+      position="top"
+      popup-transition="popup-fade">
 
+      <div class="noData">没有数据了...</div>
+    </mt-popup>
   </section>
 </template>
 
@@ -41,7 +45,8 @@
       return {
         listdata: [],
         page: 1,
-        loading: false
+        loading: false,
+        noData: false
       }
     },
     computed: {
@@ -52,11 +57,21 @@
     watch: {
       curType: function (newType) {
         if (newType === this.type) {
+          this.reCoverScroll();
           this.getnewsData();
         }
       }
     },
     methods: {
+      reCoverScroll() {
+        if(document.documentElement.scrollTop) {
+          document.documentElement.scrollTop = 0
+        }else if(window.pageYOffset){
+          window.pageYOffset = 0
+        }else{
+          document.body.scrollTop = 0
+        }
+      },
       toNewsContent(id) {
         this.$router.push({path: `/content/${id}`})
       },
@@ -68,12 +83,16 @@
           };
           this.loading = true
           requestNewList(params).then((res) => {
-            console.log(res)
+            if(res.length == 0) {
+              this.noData = true;
+              setTimeout(()=> {
+                this.noData = false;
+              },1000)
+            }
             if(this.listdata.length == 0) {
               this.listdata = res
             }else{
-              this.listdata.push(res);
-              this.listdata = thinArr(this.listdata);
+              this.listdata = this.listdata.concat(res)
             }
             this.loading = false;
             this.page++
@@ -99,17 +118,23 @@
       left: 50%;
       transform: translateX(-50%);
     }
+    .noData{
+      color:$color-theme;
+      padding: 15px 10px;
+      border-radius: 5px;
+      background-color: $color-text-nd;
+    }
     ul {
-      margin-top: $nav-height;
       width: 100%;
       overflow: auto;
+      padding: 0 10px;
       li.detail_list {
         width: 100%;
         height: 100px;
-        padding: 10px;
         display: flex;
         justify-content: space-between;
         border-bottom: 1px solid #eaeaea;
+        padding-bottom:10px;
         .content {
           max-width:90%;
           margin-top: 10px;
@@ -117,10 +142,18 @@
           .title {
             font-size: $font-size-large;
             line-height: 24px;
-            display:-webkit-box;
-            -webkit-box-orient:vertical;
-            -webkit-line-clamp:2;
+            height:48px;
             overflow:hidden;
+            /*display:-webkit-box;*/
+            /*-webkit-box-orient:vertical;*/
+            /*-webkit-line-clamp:2;*/
+            /*overflow:hidden;*/
+
+            /*overflow : hidden;*/
+            /*text-overflow: ellipsis;*/
+            /*display: -webkit-box;*/
+            /*-webkit-line-clamp: 2;*/
+            /*-webkit-box-orient: vertical;*/
           }
           .abstract {
             width: 100%;
