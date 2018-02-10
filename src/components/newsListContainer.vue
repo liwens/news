@@ -14,13 +14,15 @@
 </template>
 
 <script>
-  import {TabContainer, TabContainerItem} from 'mint-ui';
   import {requestTypeList} from '../api/requestTypeList';
   import {mapGetters, mapMutations} from 'vuex'
   import * as types from '../store/mutation-types'
   import NewsList from './newsList';
 
   export default {
+    components: {
+      NewsList
+    },
     data() {
       return {
         activetype: ''
@@ -46,11 +48,7 @@
     mounted() {
       this.setActiveType()
     },
-    components: {
-      "mtTabContainer": TabContainer,
-      "mtTabContainerItem": TabContainerItem,
-      NewsList
-    },
+
     methods: {
       /**
        * 请求新闻分类列表，设置当前频道

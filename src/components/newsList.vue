@@ -27,14 +27,9 @@
 
 <script>
   import {requestNewList} from '../api/requestNewList'
-  import { Spinner } from 'mint-ui';
   import {mapGetters} from 'vuex';
   import {thinArr} from "../common/js/tool";
-  // import Lazy from 'vue-lazyload'
   export default {
-    components: {
-      "mtSpinner": Spinner
-    },
     name: "test",
     props: {
       type: ''

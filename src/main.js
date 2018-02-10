@@ -12,6 +12,22 @@ import store from './store'
 
 import './common/sass/index.scss';
 
+// import {
+//   Button,
+//   Cell,
+//   TabContainer,
+//   TabContainerItem ,
+//   InfiniteScroll,
+//   Spinner
+// } from  'mint-ui';
+// Vue.use(Button)
+// Vue.use(Cell)
+// Vue.use(TabContainer)
+// Vue.use(TabContainerItem)
+// Vue.use(InfiniteScroll)
+// Vue.component(Spinner.name, Spinner)
+
+import 'mint-ui/lib/style.css'
 import {
   Button,
   Cell,
@@ -20,16 +36,16 @@ import {
   InfiniteScroll,
   Spinner
 } from  'mint-ui';
-Vue.use(Button)
-Vue.use(Cell)
-Vue.use(TabContainer)
-Vue.use(TabContainerItem)
+
+Vue.component(Button.name, Button)
+Vue.component(Cell.name,Cell)
+Vue.component(TabContainer.name, TabContainer)
+Vue.component(TabContainerItem.name, TabContainerItem)
 Vue.use(InfiniteScroll)
-Vue.use(Spinner)
-Vue.use(VueLazyload,{
-  error:'assets/error.png',
-  loading:'assets/loading.png'
-});
+Vue.component(Spinner.name, Spinner)
+
+
+Vue.use(VueLazyload)
 
 Vue.config.productionTip = false
 

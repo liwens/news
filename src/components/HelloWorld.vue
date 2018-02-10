@@ -7,14 +7,11 @@
 </template>
 
 <script>
-  import {Button} from 'mint-ui';
+
   import {requestTypeList} from '../api/requestTypeList';
 
 export default {
   name: 'HelloWorld',
-  components: {
-    "mtButton":Button
-  },
   created() {
     this.$nextTick(() =>{
       requestTypeList().then((res)=> {
