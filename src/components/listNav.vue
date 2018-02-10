@@ -101,7 +101,7 @@
   @import "../common/sass/variable";
 
   .list_nav {
-    position: fixed;
+    position: relative;
 
     z-index: 100;
     border-top: 1px solid $color-theme;
@@ -114,7 +114,7 @@
       display: none;
     }
     .new_lists {
-      /*position: absolute;*/
+      position: absolute;
       background: #f4f5f6;
       .new_type {
         display: inline-block;

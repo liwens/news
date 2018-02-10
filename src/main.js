@@ -43,10 +43,7 @@ Vue.component(TabContainer.name, TabContainer)
 Vue.component(TabContainerItem.name, TabContainerItem)
 Vue.use(InfiniteScroll)
 Vue.component(Spinner.name, Spinner)
-
-
 Vue.use(VueLazyload)
-
 Vue.config.productionTip = false
 
 

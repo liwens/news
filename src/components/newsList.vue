@@ -2,7 +2,7 @@
   <section
     v-infinite-scroll="getnewsData"
     infinite-scroll-disabled="thisLoading"
-    infinite-scroll-distanc=10>
+    infinite-scroll-distanc=100>
     <ul>
       <template v-for="data in listdata">
         <li class="detail_list" @click="toNewsContent(data.id)">
@@ -13,7 +13,10 @@
               <time class="time">{{ data.time }}</time>
             </div>
           </div>
-          <img class="photo" v-if="data.img" v-lazy="data.img">
+          <div class="photo" >
+            <img  v-if="data.img" v-lazy="data.img">
+          </div>
+
         </li>
       </template>
 
@@ -104,6 +107,7 @@
         width: 100%;
         height: 100px;
         padding: 10px;
+        padding-right:20px;
         display: flex;
         justify-content: space-between;
         border-bottom: 1px solid #eaeaea;
@@ -134,13 +138,17 @@
             }
           }
         }
-        img.photo {
+        .photo {
           margin-right: 5%;
           margin-left: 3%;
           width: 80px;
           height: 80px;
           align-self: center;
           border-radius: 3px;
+            img{
+            width:80px;
+            height:80px;
+          }
         }
       }
     }

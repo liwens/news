@@ -54,7 +54,7 @@
 <style  rel='stylesheet/scss' lang="scss">
   @import "../common/sass/variable";
   .detail_container {
-    padding: 10px;
+    padding: 10px 20px;
 
     h1.title {
       font-size: $font-size-large-x;
@@ -64,6 +64,7 @@
     }
     time.time{
       font-size:$font-size-small;
+      color:#b3b3b3;
     }
     article {
       width: 100%;
@@ -73,18 +74,16 @@
         p{
           width:100%;
           font-size: $font-size-medium-x;
-          line-height: 22px;
-          margin:10px auto;
+          line-height: 24px;
+          margin:14px auto;
           img{
             width:100%;
             /*margin-left:0;*/
-            border:1px solid #ccc;
-            margin:10px auto;
+
           }
           span.ifengLogo{
             img{
               width:16px;
-              border:none;
             }
           }
         }
@@ -92,7 +91,9 @@
           font-size:$font-size-medium;
         }
         p.detailPic{
-
+          width:100%;
+          border:1px solid #ccc;
+          margin:10px auto;
 
         }
       }
