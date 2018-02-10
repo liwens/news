@@ -1,13 +1,16 @@
 <template>
-  <mt-tab-container v-model="activetype" :swipeable=true>
+  <section class="news_Container" ref="news_Container">
+    <mt-tab-container v-model="activetype" :swipeable=true>
       <template v-for="type in listTypes">
         <keep-alive>
-        <mt-tab-container-item :id="type" class="item">
-          <news-list :type="type"></news-list>
-        </mt-tab-container-item>
+          <mt-tab-container-item :id="type" class="item">
+            <news-list :type="type"></news-list>
+          </mt-tab-container-item>
         </keep-alive>
       </template>
-  </mt-tab-container>
+    </mt-tab-container>
+  </section>
+
 
 </template>
 
@@ -44,10 +47,15 @@
       }
     },
     mounted() {
-      this.setActiveType()
+      this.setActiveType();
+      this.setContainerHeight();
     },
 
     methods: {
+      setContainerHeight() {
+        let navHeight = document.querySelector('.list_nav').getBoundingClientRect().height;
+        document.querySelector('.news_Container').style.height = window.screen.availHeight - navHeight+'px';
+      },
       /**
        * 请求新闻分类列表，设置当前频道
        * */
@@ -66,8 +74,7 @@
 </script>
 
 <style scoped rel='stylesheet/scss' lang="scss">
-  .item{
-
-
+  .news_Container{
+    overflow: scroll;
   }
 </style>

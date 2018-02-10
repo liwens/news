@@ -71,24 +71,26 @@
               //中间位置的left =( 屏幕宽度 - li宽度 ) / 2;
               diffWidth = (window_offsetWidth - dom.getBoundingClientRect().width) / 2,
               //目标值 = offsetLeft - 中间值的left
-              targetOffset = dom.offsetLeft - diffWidth;
-            //开始
-            if (targetOffset < 0) {
-              ul.style.tranform = `translateX(0px)`;
-              return;
-            }
-            //结束
-            if(targetOffset > ul.getBoundingClientRect().width - diffWidth) {
-              alert('到了！')
-              // ul.style.tranform = `translateX(${ul.getBoundingClientRect().width - diffWidth}px)`;
-              return;
-            }
-            console.log(' ul.getBoundingClientRect().width - diffWidth')
-            console.log("宽度" + ul.getBoundingClientRect().width)
-            console.log('left:' + ul.getBoundingClientRect().left)
-            console.log('li:'+ dom.offsetLeft)
-            console.log("目标值：" + targetOffset)
+              targetOffset = dom.offsetLeft;
 
+            // console.log( ul.getBoundingClientRect().width)
+            // console.log('diff:'+diffWidth)
+            // console.log("宽度" + ul.getBoundingClientRect().width)
+            // console.log('left:' + ul.getBoundingClientRect().left)
+            // console.log('liLeft:'+ dom.offsetLeft)
+            // console.log("目标值：" + targetOffset)
+            // console.log(`计算值： ${targetOffset +  diffWidth + dom.getBoundingClientRect().width}`)
+            // //开始
+            // if (targetOffset < 0) {
+            //   ul.style.transform = `translateX(0px)`;
+            //   return;
+            // }
+            //结束
+            if(targetOffset > ul.getBoundingClientRect().width - window_offsetWidth) {
+             console.log(ul.getBoundingClientRect().width - window_offsetWidth)
+              ul.style.tranform = `translateX(${ul.getBoundingClientRect().width - window_offsetWidth + 40}px)`;
+              return;
+            }
             ul.style.transform = `translateX(${-targetOffset}px)`;
           }
         })
@@ -102,7 +104,6 @@
 
   .list_nav {
     position: relative;
-
     z-index: 100;
     border-top: 1px solid $color-theme;
     border-bottom: 1px solid #dddddd;

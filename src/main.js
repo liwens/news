@@ -12,21 +12,6 @@ import store from './store'
 
 import './common/sass/index.scss';
 
-// import {
-//   Button,
-//   Cell,
-//   TabContainer,
-//   TabContainerItem ,
-//   InfiniteScroll,
-//   Spinner
-// } from  'mint-ui';
-// Vue.use(Button)
-// Vue.use(Cell)
-// Vue.use(TabContainer)
-// Vue.use(TabContainerItem)
-// Vue.use(InfiniteScroll)
-// Vue.component(Spinner.name, Spinner)
-
 import 'mint-ui/lib/style.css'
 import {
   Button,
@@ -34,7 +19,8 @@ import {
   TabContainer,
   TabContainerItem ,
   InfiniteScroll,
-  Spinner
+  Spinner,
+  Popup
 } from  'mint-ui';
 
 Vue.component(Button.name, Button)
@@ -43,6 +29,7 @@ Vue.component(TabContainer.name, TabContainer)
 Vue.component(TabContainerItem.name, TabContainerItem)
 Vue.use(InfiniteScroll)
 Vue.component(Spinner.name, Spinner)
+Vue.component(Popup.name, Popup)
 Vue.use(VueLazyload)
 Vue.config.productionTip = false
 
