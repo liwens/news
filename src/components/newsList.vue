@@ -13,8 +13,8 @@
               <time class="time">{{ data.time }}</time>
             </div>
           </div>
-          <div class="photo" >
-            <img  v-if="data.img" v-lazy="data.img">
+          <div class="photo" v-if="data.img">
+            <img   v-lazy="data.img">
           </div>
 
         </li>
@@ -112,17 +112,20 @@
         width: 100%;
         height: 100px;
         padding: 10px;
-        padding-right:20px;
         display: flex;
         justify-content: space-between;
         border-bottom: 1px solid #eaeaea;
         .content {
-
+          max-width:90%;
           margin-top: 10px;
           position: relative;
           .title {
             font-size: $font-size-large;
             line-height: 24px;
+            display:-webkit-box;
+            -webkit-box-orient:vertical;
+            -webkit-line-clamp:2;
+            overflow:hidden;
           }
           .abstract {
             width: 100%;
@@ -140,19 +143,20 @@
               font-size: $font-size-medium;
               color: #b3b3b3;
               line-height: 16px;
+              margin-top:5px;
             }
           }
         }
         .photo {
-          margin-right: 5%;
-          margin-left: 3%;
-          width: 80px;
-          height: 80px;
+          margin-right:20px;
+          margin-left:10px;
+          width: 85px;
+          height: 85px;
           align-self: center;
-          border-radius: 3px;
             img{
-            width:80px;
-            height:80px;
+              width:85px;
+              height:85px;
+              border-radius: 5px;
           }
         }
       }

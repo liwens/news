@@ -78,6 +78,7 @@
           margin:14px auto;
           img{
             width:100%;
+            height:auto;
             /*margin-left:0;*/
 
           }
@@ -87,9 +88,7 @@
             }
           }
         }
-        p:first-child{
-          font-size:$font-size-medium;
-        }
+
         p.detailPic{
           width:100%;
           border:1px solid #ccc;
