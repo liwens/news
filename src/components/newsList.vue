@@ -8,10 +8,8 @@
         <li class="detail_list" @click="toNewsContent(data.id)">
           <div class="content">
             <h1 class="title">{{ data.title }}</h1>
-            <div class="abstract">
-              <div class="type">{{ data.type }}</div>
-              <time class="time">{{ data.time }}</time>
-            </div>
+            <time class="time">{{ data.time }}</time>
+
           </div>
           <div class="photo" v-if="data.img">
             <img v-lazy="data.img">
@@ -36,6 +34,7 @@
   import {requestNewList} from '../api/requestNewList'
   import {mapGetters} from 'vuex';
   import {thinArr} from "../common/js/tool";
+
   export default {
     name: "test",
     props: {
@@ -67,11 +66,11 @@
     },
     methods: {
       reCoverScroll() {
-        if(document.documentElement.scrollTop) {
+        if (document.documentElement.scrollTop) {
           document.documentElement.scrollTop = 0
-        }else if(window.pageYOffset){
+        } else if (window.pageYOffset) {
           window.pageYOffset = 0
-        }else{
+        } else {
           document.body.scrollTop = 0
         }
       },
@@ -79,22 +78,22 @@
         this.$router.push({path: `/content/${id}`})
       },
       getnewsData() {
-        if(this.curType == this.type) {
+        if (this.curType == this.type) {
           let params = {
             page: this.page,
             type: this.type
           };
           this.loading = true
           requestNewList(params).then((res) => {
-            if(res.length == 0) {
+            if (res.length == 0) {
               this.noData = true;
-              setTimeout(()=> {
+              setTimeout(() => {
                 this.noData = false;
-              },1000)
+              }, 1000)
             }
-            if(this.listdata.length == 0) {
+            if (this.listdata.length == 0) {
               this.listdata = res
-            }else{
+            } else {
               this.listdata = this.listdata.concat(res)
             }
             this.loading = false;
@@ -113,16 +112,17 @@
 
 <style scoped rel='stylesheet/scss' lang="scss">
   @import "../common/sass/variable";
+
   section {
-    .loading{
+    .loading {
       text-align: center;
       position: fixed;
       bottom: 20px;
       left: 50%;
       transform: translateX(-50%);
     }
-    .noData{
-      color:$color-theme;
+    .noData {
+      color: $color-theme;
       padding: 15px 10px;
       border-radius: 5px;
       background-color: $color-text-nd;
@@ -138,16 +138,17 @@
         display: flex;
         justify-content: space-between;
         border-bottom: 1px solid #eaeaea;
-        padding-bottom:10px;
+        padding-bottom: 20px;
+        /*padding-top:20px;*/
         .content {
-          max-width:90%;
+          max-width: 90%;
           margin-top: 10px;
           position: relative;
           .title {
-            font-size: $font-size-large;
-            line-height: 24px;
-            height:48px;
-            overflow:hidden;
+            font-size: $font-size-medium-x;
+            line-height: 22px;
+            height: 44px;
+            overflow: hidden;
             /*display:-webkit-box;*/
             /*-webkit-box-orient:vertical;*/
             /*-webkit-line-clamp:2;*/
@@ -159,36 +160,25 @@
             /*-webkit-line-clamp: 2;*/
             /*-webkit-box-orient: vertical;*/
           }
-          .abstract {
-            width: 100%;
-            position: absolute;
-            bottom: 3px;
-            display: flex;
-            justify-content: space-between;
-            .type {
-              border: 1px solid #b3b3b3;
-              color: #b3b3b3;
-              font-size: $font-size-medium;
-              padding: 2px;
-            }
-            .time {
-              font-size: $font-size-medium;
-              color: #b3b3b3;
-              line-height: 16px;
-              margin-top:5px;
-            }
+
+          .time {
+            font-size: $font-size-medium;
+            color: #b3b3b3;
+            line-height: 16px;
+            position:absolute;
+            bottom:15px;
           }
         }
         .photo {
-          margin-right:20px;
-          margin-left:10px;
+          margin-right: 20px;
+          margin-left: 10px;
           width: 85px;
           height: 85px;
           align-self: center;
-            img{
-              width:85px;
-              height:85px;
-              border-radius: 5px;
+          img {
+            width: 85px;
+            height: 85px;
+            border-radius: 5px;
           }
         }
       }
