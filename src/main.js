@@ -31,9 +31,14 @@ Vue.component(TabContainerItem.name, TabContainerItem)
 Vue.use(InfiniteScroll)
 Vue.component(Spinner.name, Spinner)
 Vue.component(Popup.name, Popup)
+
 Vue.component(Loadmore.name, Loadmore);
 
-Vue.use(VueLazyload)
+
+Vue.use(VueLazyload, {
+  loading: '../static/download.gif'
+
+})
 Vue.config.productionTip = false
 
 
