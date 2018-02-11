@@ -9,7 +9,6 @@
       <news-list></news-list>
     <!--</keep-alive>-->
   </div>
-
 </template>
 
 <script>

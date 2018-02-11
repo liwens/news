@@ -1,9 +1,14 @@
 <template>
-  <section
-    v-infinite-scroll="getnewsData"
-    infinite-scroll-disabled="loading"
-    infinite-scroll-distanc=200
-  >
+  <!--<section-->
+
+    <!--v-infinite-scroll="getnewsData"-->
+    <!--infinite-scroll-disabled="loading"-->
+    <!--infinite-scroll-distanc=20-->
+  <!--&gt;-->
+  <mt-loadmore :bottom-method="getnewsData" :bottom-all-loaded="allLoaded" ref="loadmore" :bottomDistance=30>
+    <section>
+
+
     <ul>
       <template v-for="data in curListData.data">
         <li class="detail_list" @click="toNewsContent(data.id)">
@@ -18,9 +23,9 @@
         </li>
       </template>
     </ul>
-    <i class="loading" v-if="loadingIconVis">
-      <mt-spinner type="snake" color="rgb(229,150,115)"></mt-spinner>
-    </i>
+    <!--<i class="loading" v-if="loadingIconVis">-->
+      <!--<mt-spinner type="snake" color="rgb(229,150,115)"></mt-spinner>-->
+    <!--</i>-->
     <mt-popup
       v-model=noData
       position="top"
@@ -28,7 +33,9 @@
 
       <div class="noData">没有数据了...</div>
     </mt-popup>
-  </section>
+    </section>
+  </mt-loadmore>
+
 </template>
 
 <script>
@@ -43,7 +50,8 @@
           page: 1,
           noData: false,
           loading: false,
-          loadingIconVis: false
+          loadingIconVis: false,
+          allLoaded: false
         }
       },
       watch: {
@@ -72,8 +80,14 @@
         if(this.curListData.data.length == 0) {
           this.getnewsData();
         }
+        // this.setContainerHeight();
+        // document.querySelector('.section').style.height = window.innerHeight - document.querySelector('.list_nav').getBoundingClientRect().height + 5 + 'px';
       },
       methods: {
+        // setContainerHeight() {
+        //   console.log(document.querySelector('.section'))
+        //   // document.querySelector('.section').style.height = window.innerHeight - document.querySelector('.list_nav').getBoundingClientRect().height + 'px';
+        // },
         toNewsContent(id) {
           this.$router.push({path: `/content/${id}`})
         },
@@ -101,12 +115,14 @@
                   this.noData = false;
                   this.loading = true;
                   this.loadingIconVis = false;
+                  this.allLoaded = true;
                 }, 1000)
                 return;
               }
               this.set_curListData(res)
               this.loading = false;
               this.loadingIconVis = false;
+              this.$refs.loadmore.onBottomLoaded();
             })
           },
         ...mapMutations({
@@ -121,6 +137,8 @@
   @import "../common/sass/variable";
 
   section {
+    padding: 0 10px;
+    box-sizing: border-box;
     .loading {
       text-align: center;
       position: fixed;
@@ -134,8 +152,7 @@
       border-radius: 5px;
       background-color: $color-text-nd;
     }
-    padding: 0 10px;
-    box-sizing: border-box;
+
     ul {
       margin-top: $nav-height;
       width: 100%;

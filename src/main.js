@@ -20,7 +20,8 @@ import {
   TabContainerItem ,
   InfiniteScroll,
   Spinner,
-  Popup
+  Popup,
+  Loadmore
 } from  'mint-ui';
 
 Vue.component(Button.name, Button)
@@ -30,6 +31,8 @@ Vue.component(TabContainerItem.name, TabContainerItem)
 Vue.use(InfiniteScroll)
 Vue.component(Spinner.name, Spinner)
 Vue.component(Popup.name, Popup)
+Vue.component(Loadmore.name, Loadmore);
+
 Vue.use(VueLazyload)
 Vue.config.productionTip = false
 
