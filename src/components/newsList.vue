@@ -12,7 +12,7 @@
 
           </div>
           <div class="photo" v-if="data.img">
-            <img v-lazy="data.img">
+            <img  v-lazy="data.img">
           </div>
         </li>
       </template>
