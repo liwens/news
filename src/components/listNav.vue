@@ -1,7 +1,7 @@
 <template>
   <nav class="list_nav">
     <ul class="new_lists" ref="ul">
-      <li v-for="list in listdata" class="new_type" @click="onClickAndChangeType(list)"
+      <li v-for="list in listTypes" class="new_type" @click="onClickAndChangeType(list)"
           :class="{active:curType == list}">{{ list }}
       </li>
     </ul>
@@ -33,8 +33,6 @@
     },
     mounted() {
       this.$nextTick(()=> {
-        console.log(this.listdata)
-        console.log(this.listTypes)
         if(!this.listTypes) {
           requestTypeList().then((res) => {
             this.listdata = res;
@@ -42,11 +40,14 @@
             let curType = sessionStorage.getItem('curType') ? sessionStorage.getItem('curType') : res[0]
             this.set_news_type(curType);
             this.setULwidth();
+            this.moveNav()
           })
         }else{
           this.listdata = this.listTypes;
           this.setULwidth();
+          this.moveNav()
         }
+
       })
     },
     methods: {

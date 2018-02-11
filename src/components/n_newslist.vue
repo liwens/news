@@ -5,7 +5,7 @@
     <!--infinite-scroll-disabled="loading"-->
     <!--infinite-scroll-distanc=20-->
   <!--&gt;-->
-  <mt-loadmore :bottom-method="getnewsData" :bottom-all-loaded="allLoaded" ref="loadmore" :bottomDistance=30>
+  <mt-loadmore :bottom-method="getnewsData" :bottom-all-loaded="allLoaded" ref="loadmore" :bottomDistance=20>
     <section>
 
 
