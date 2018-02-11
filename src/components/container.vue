@@ -1,17 +1,20 @@
 <template>
   <div>
     <!--分类列表-->
-    <list-nav></list-nav>
-
+      <keep-alive>
+        <list-nav></list-nav>
+      </keep-alive>
     <!--新闻详细列表-->
-    <news-list></news-list>
+    <!--<keep-alive>-->
+      <news-list></news-list>
+    <!--</keep-alive>-->
   </div>
 
 </template>
 
 <script>
     import listNav from './listNav'
-    import newsList from './newsListContainer'
+    import newsList from './n_newslist'
     export default {
       components: {
         listNav,

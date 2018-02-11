@@ -10,8 +10,8 @@
 
 <script>
   import {requestTypeList} from '../api/requestTypeList';
-  import {mapMutations, mapGetters} from 'vuex'
-  import * as types from '../store/mutation-types'
+  import {mapMutations, mapGetters} from 'vuex';
+  import * as types from '../store/mutation-types';
 
   export default {
     name: "list-nav",
@@ -22,21 +22,31 @@
     },
     watch: {
       curType: function (newtype) {
-        // this.moveNav()
+        this.moveNav()
       }
     },
     computed: {
       ...mapGetters([
-        'curType'
+        'curType',
+        'listTypes'
       ])
     },
-    created() {
-      this.$nextTick(() => {
-        requestTypeList().then((res) => {
-          this.listdata = res;
-          this.set_list_typs(res);
+    mounted() {
+      this.$nextTick(()=> {
+        console.log(this.listdata)
+        console.log(this.listTypes)
+        if(!this.listTypes) {
+          requestTypeList().then((res) => {
+            this.listdata = res;
+            this.set_list_typs(res);
+            let curType = sessionStorage.getItem('curType') ? sessionStorage.getItem('curType') : res[0]
+            this.set_news_type(curType);
+            this.setULwidth();
+          })
+        }else{
+          this.listdata = this.listTypes;
           this.setULwidth();
-        })
+        }
       })
     },
     methods: {
@@ -69,12 +79,6 @@
           let ul = document.querySelector('.new_lists');
           let window_offsetWidth = window.innerWidth; //屏幕宽度;
           if (dom) {
-            let
-              //中间位置的left =( 屏幕宽度 - li宽度 ) / 2;
-              diffWidth = (window_offsetWidth - dom.getBoundingClientRect().width) / 2,
-              //目标值 = offsetLeft - 中间值的left
-              targetOffset = dom.offsetLeft;
-
             // console.log( ul.getBoundingClientRect().width)
             // console.log('diff:'+diffWidth)
             // console.log("宽度" + ul.getBoundingClientRect().width)
@@ -82,18 +86,27 @@
             // console.log('liLeft:'+ dom.offsetLeft)
             // console.log("目标值：" + targetOffset)
             // console.log(`计算值： ${targetOffset +  diffWidth + dom.getBoundingClientRect().width}`)
-            // //开始
-            // if (targetOffset < 0) {
-            //   ul.style.transform = `translateX(0px)`;
+
+            //结束
+            // if(targetOffset > ul.getBoundingClientRect().width - window_offsetWidth) {
+            //  console.log(ul.getBoundingClientRect().width - window_offsetWidth)
+            //   ul.style.tranform = `translateX(${ul.getBoundingClientRect().width - window_offsetWidth + 40}px)`;
             //   return;
             // }
-            //结束
-            if(targetOffset > ul.getBoundingClientRect().width - window_offsetWidth) {
-             console.log(ul.getBoundingClientRect().width - window_offsetWidth)
-              ul.style.tranform = `translateX(${ul.getBoundingClientRect().width - window_offsetWidth + 40}px)`;
+
+
+            let domoffsetWidth = dom.offsetLeft,
+              //中间值 =( 屏幕宽度 - li宽度 ) / 2;
+              diffWidth = (window_offsetWidth - dom.getBoundingClientRect().width) / 2,
+              //目标值 = offset - 中间值
+              targetOffset = domoffsetWidth - diffWidth;
+            console.log(ul.getBoundingClientRect())
+            //开始
+            if (targetOffset < 0) {
+              ul.style.left = '0px';
               return;
             }
-            ul.style.transform = `translateX(${-targetOffset}px)`;
+            ul.style.left = -targetOffset + 'px'
           }
         })
       }

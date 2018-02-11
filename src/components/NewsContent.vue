@@ -36,12 +36,7 @@
           this.contentData = res;
           this.$nextTick(() => {
             this.$refs.content.innerHTML = res.html;
-
-            console.log(document.querySelectorAll('p'))
-            console.log(res)
           })
-
-
         }).catch((err) => {
           console.log(err)
         })

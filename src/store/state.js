@@ -7,7 +7,11 @@ const state = {
   /**
    * 所有频道列表
    * */
-  listTypes: ''
+  listTypes: '',
+  curListData: {
+    data:[],
+    page:1
+  }
 }
 
 export default state;
