@@ -86,18 +86,29 @@
               targetOffset = -(domoffsetWidth - diffWidth);
             let ul_width = ul.getBoundingClientRect().width;
             let nav = document.querySelector(".list_nav");
-            //开始
+            // //开始
+            // if (-targetOffset < 0) {
+            //   nav.scrollLeft = 0
+            //   return;
+            // }
+            // //末尾
+            // if(targetOffset <  window_offsetWidth - ul_width ){
+            //   nav.scrollLeft = window_offsetWidth - ul_width
+            //   return;
+            // }
+            // //正常
+            // nav.scrollLeft = targetOffset
+
             if (-targetOffset < 0) {
-              ul.style.left = '0px';
+              nav.scrollLeft = 0;
               return;
             }
-            //末尾
             if(targetOffset <  window_offsetWidth - ul_width ){
-              ul.style.left = window_offsetWidth - ul_width + "px"
+              nav.scrollLeft =ul_width -  window_offsetWidth ;
               return;
             }
-            //正常
-            ul.style.left = targetOffset + 'px';
+            nav.scrollLeft = -targetOffset ;
+
           }
         })
       }
