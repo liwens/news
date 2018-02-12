@@ -64,7 +64,7 @@
     article {
       width: 100%;
       text-align:left;
-      .js_selection_area{
+      .yc_con_txt,.js_selection_area{
         width:100%;
         p{
           width:100%;
@@ -88,7 +88,12 @@
           width:100%;
           border:1px solid #ccc;
           margin:10px auto;
-
+        }
+        p.picIntro{
+          text-align:center;
+          margin-top:0;
+          font-size:$font-size-medium;
+          line-height:18px;
         }
       }
 
