@@ -37,7 +37,7 @@
           requestTypeList().then((res) => {
             this.listdata = res;
             this.set_list_typs(res);
-            let curType = sessionStorage.getItem('curType') ? sessionStorage.getItem('curType') : res[0]
+            let curType = localStorage.getItem('curType') ? localStorage.getItem('curType') : res[0]
             this.set_news_type(curType);
             this.setULwidth();
             this.moveNav()
@@ -61,14 +61,13 @@
           }
           ul.style.width = liWidth + "px";
         })
-
       },
       onClickAndChangeType(list) {
         this.set_news_type(list);
-        if(sessionStorage.getItem('curType')){
-          sessionStorage.setItem('lastType', sessionStorage.getItem('curType'))
+        if(localStorage.getItem('curType')){
+          localStorage.setItem('lastType', localStorage.getItem('curType'))
         }
-        sessionStorage.setItem('curType', list)
+        localStorage.setItem('curType', list);
       },
       ...mapMutations({
         set_news_type: types.SET_CUR_TYPE,
@@ -84,17 +83,21 @@
               //中间值 =( 屏幕宽度 - li宽度 ) / 2;
               diffWidth = (window_offsetWidth - dom.getBoundingClientRect().width) / 2,
               //目标值 = offset - 中间值
-              targetOffset = domoffsetWidth - diffWidth;
+              targetOffset = -(domoffsetWidth - diffWidth);
             let ul_width = ul.getBoundingClientRect().width;
             let nav = document.querySelector(".list_nav");
-            ul.style.left = -targetOffset + 'px';
-            if (targetOffset < 0) {
+            //开始
+            if (-targetOffset < 0) {
               ul.style.left = '0px';
               return;
             }
-            if(ul.offsetLeft <=  window_offsetWidth - ul_width ){
+            //末尾
+            if(targetOffset <  window_offsetWidth - ul_width ){
               ul.style.left = window_offsetWidth - ul_width + "px"
+              return;
             }
+            //正常
+            ul.style.left = targetOffset + 'px';
           }
         })
       }
@@ -114,13 +117,13 @@
     border-bottom: 1px solid #dddddd;
     height: $nav-height;
     overflow-x: scroll;
-    transition: all .4s;
+    /*transition: all .4s;*/
     background: $color-text-nd;
     &::-webkit-scrollbar {
       display: none;
     }
     .new_lists {
-      transition: all .4s;
+      transition: left .4s;
       position: absolute;
       background: $color-text-nd;
       .new_type {

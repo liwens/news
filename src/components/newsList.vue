@@ -160,8 +160,7 @@
         display: flex;
         justify-content: space-between;
         border-bottom: 1px solid #eaeaea;
-        padding-bottom: 20px;
-
+        padding: 8px 0;
         /*padding-top:20px;*/
         .content {
           max-width: 90%;
@@ -176,16 +175,6 @@
             word-break: break-all;
             -webkit-box-orient: vertical;
             -webkit-line-clamp:2;
-            /*display:-webkit-box;*/
-            /*-webkit-box-orient:vertical;*/
-            /*-webkit-line-clamp:2;*/
-            /*overflow:hidden;*/
-
-            /*overflow : hidden;*/
-            /*text-overflow: ellipsis;*/
-            /*display: -webkit-box;*/
-            /*-webkit-line-clamp: 2;*/
-            /*-webkit-box-orient: vertical;*/
           }
 
           .time {
@@ -197,7 +186,6 @@
           }
         }
         .photo {
-          margin-right: 20px;
           margin-left: 10px;
           width: 85px;
           height: 85px;
