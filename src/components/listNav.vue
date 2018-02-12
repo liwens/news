@@ -101,13 +101,31 @@
               diffWidth = (window_offsetWidth - dom.getBoundingClientRect().width) / 2,
               //目标值 = offset - 中间值
               targetOffset = domoffsetWidth - diffWidth;
-            console.log(ul.getBoundingClientRect())
+
+            let ul_width = ul.getBoundingClientRect().width;
+
+            // console.log(ul.getBoundingClientRect())
+            console.log(window_offsetWidth);
+            // console.log(ul_width - window_offsetWidth);
+            // console.log(ul.offsetLeft);
+
+            let nav = document.querySelector(".list_nav");
+            console.log(nav.scrollWidth);
+
+
+
             //开始
+            ul.style.left = -targetOffset + 'px';
+
+
             if (targetOffset < 0) {
               ul.style.left = '0px';
               return;
             }
-            ul.style.left = -targetOffset + 'px'
+            if(ul.offsetLeft <=  window_offsetWidth - ul_width ){
+              ul.style.left = window_offsetWidth - ul_width + "px"
+            }
+
           }
         })
       }
@@ -128,6 +146,7 @@
     border-bottom: 1px solid #dddddd;
     height: $nav-height;
     overflow-x: scroll;
+
     background: $color-text-nd;
     &::-webkit-scrollbar {
       display: none;
