@@ -5,15 +5,13 @@
         <list-nav></list-nav>
       </keep-alive>
     <!--新闻详细列表-->
-    <!--<keep-alive>-->
       <news-list></news-list>
-    <!--</keep-alive>-->
   </div>
 </template>
 
 <script>
     import listNav from './listNav'
-    import newsList from './n_newslist'
+    import newsList from './newsList'
     export default {
       components: {
         listNav,

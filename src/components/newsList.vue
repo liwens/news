@@ -1,23 +1,19 @@
 <template>
-  <section
-    v-infinite-scroll="getnewsData"
-    infinite-scroll-disabled="thisLoading"
-    infinite-scroll-distanc=100>
-    <ul>
-      <template v-for="data in listdata">
+  <section v-scroll>
+    <ul class="ul">
+      <template v-for="data in curListData.data">
         <li class="detail_list" @click="toNewsContent(data.id)">
           <div class="content">
             <h1 class="title">{{ data.title }}</h1>
             <time class="time">{{ data.time }}</time>
-
           </div>
           <div class="photo" v-if="data.img">
-            <img  v-lazy="data.img">
+            <img v-lazy="data.img">
           </div>
         </li>
       </template>
     </ul>
-    <i class="loading" v-if="loading">
+    <i class="loading" v-if="loadingIconVis">
       <mt-spinner type="snake" color="rgb(229,150,115)"></mt-spinner>
     </i>
     <mt-popup
@@ -27,102 +23,117 @@
 
       <div class="noData">没有数据了...</div>
     </mt-popup>
-  </section>
+</section>
 </template>
 
 <script>
-  import {requestNewList} from '../api/requestNewList'
-  import {mapGetters} from 'vuex';
-  import {thinArr} from "../common/js/tool";
 
-  export default {
-    name: "test",
-    props: {
-      type: ''
-    },
-    data() {
-      return {
-        listdata: [],
-        page: 1,
-        loading: false,
-        noData: false
-      }
-    },
-    computed: {
-      thisLoading() {
-        return this.loading && this.type == this.curType;
-      }
-    },
-    watch: {
-      curType: function (newType) {
-        if (newType === this.type) {
-          this.getnewsData();
-          //避免当前频道，滚动条被重置
-          console.log("上个频道："+ sessionStorage.getItem('lastType'))
-          console.log("当前频道："+ newType)
-          if(sessionStorage.getItem('lastType') && sessionStorage.getItem('lastType') !== newType) {
-            // alert('重置滚动条')
-            this.reCoverScroll();
+    import {requestNewList} from '../api/requestNewList'
+    import {mapGetters, mapMutations} from 'vuex';
+    import * as types from '../store/mutation-types'
+    export default {
+      directives: {
+        /**
+         * 滚动加载的自定义指令
+         */
+        scroll: {
+          bind: function(el, binding, vnode) {
+              window.addEventListener('scroll',()=> {
+                let scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
+                if(scrollTop + window.innerHeight >= el.clientHeight - 50) {
+                  //判断请求发送标志位，避免重复请求
+                  if(vnode.context.loading) return;
+                  //发送请求
+                  vnode.context.getnewsData();
+                }
+              })
           }
         }
-      }
-    },
-    mounted() {
+      },
+      name: "n_newslist",
+      data() {
+        return {
+          listdata: [],
+          page: 1,
+          noData: false,
+          loading: false,
+          loadingIconVis: false
+        }
+      },
+      watch: {
+        /**
+         * 记录当前频道
+         * */
+        curType: function (newType) {
+          this.initData();
+          this.getnewsData();
+        }
+      },
+      computed: {
+        ...mapGetters([
+          'curType',
+          'curListData'
+        ])
+      },
+      mounted() {
+        if(this.curListData.data.length == 0) {
+          this.getnewsData();
+        }
+      },
+      methods: {
+        /**
+         * 前往新闻详细页，传入新闻ID值
+         * */
+        toNewsContent(id) {
+          this.$router.push({path: `/content/${id}`})
+        },
+        /**
+         * 切换频道时，重置vuex里记录的新闻列表数据和page
+         * */
+        initData() {
+          this.remove_curListData()
+          this.page = 1;
+        },
+        /**
+         * 请求数据
+         * */
+        getnewsData() {
+            let params = {
+              page: this.curListData.page,
+              type: this.curType
+            };
 
-    },
-    methods: {
-      /**
-       * 重设滚动条到顶部
-       * */
-      reCoverScroll() {
-        if (document.documentElement.scrollTop) {
-          document.documentElement.scrollTop = 0
-        } else if (window.pageYOffset) {
-          window.pageYOffset = 0
-        } else {
-          document.body.scrollTop = 0
-        }
-      },
-      toNewsContent(id) {
-        this.$router.push({path: `/content/${id}`})
-      },
-      getnewsData() {
-        if (this.curType == this.type) {
-          let params = {
-            page: this.page,
-            type: this.type
-          };
-          this.loading = true
-          requestNewList(params).then((res) => {
-            if (res.length == 0) {
-              this.noData = true;
-              setTimeout(() => {
-                this.noData = false;
-              }, 1000)
-            }
-            if (this.listdata.length == 0) {
-              this.listdata = res
-            } else {
-              this.listdata = this.listdata.concat(res)
-            }
-            this.loading = false;
-            this.page++
-          })
-        }
+          if(this.curType == '') return
+            this.loading = true
+            this.loadingIconVis = true;
+            requestNewList(params).then((res) => {
+              //没有数据
+              if (res.length == 0) {
+                this.noData = true;
+                setTimeout(() => {
+                  this.noData = false;
+                  this.loadingIconVis = false;
+                }, 2000)
+                return;
+              }
+              this.set_curListData(res)
+              this.loading = false;
+              this.loadingIconVis = false;
+            })
+          },
+        ...mapMutations({
+          set_curListData: types.SET_CUR_LIST_DATA,
+          remove_curListData: types.REMOVE_CUR_LIST_DATA
+        })
       }
-    },
-    computed: {
-      ...mapGetters([
-        'curType'
-      ])
     }
-  }
 </script>
 
 <style scoped rel='stylesheet/scss' lang="scss">
   @import "../common/sass/variable";
 
-  section {
+
+
     .loading {
       text-align: center;
       position: fixed;
@@ -136,11 +147,13 @@
       border-radius: 5px;
       background-color: $color-text-nd;
     }
+
     ul {
       margin-top: $nav-height;
       width: 100%;
       overflow: auto;
       padding: 0 10px;
+      box-sizing: border-box;
       li.detail_list {
         width: 100%;
         height: 100px;
@@ -148,6 +161,7 @@
         justify-content: space-between;
         border-bottom: 1px solid #eaeaea;
         padding-bottom: 20px;
+
         /*padding-top:20px;*/
         .content {
           max-width: 90%;
@@ -156,7 +170,7 @@
           .title {
             font-size: $font-size-medium-x;
             line-height: 22px;
-            height: 40px;
+            height: 44px;
             overflow: hidden;
             text-overflow: ellipsis;
             word-break: break-all;
@@ -196,6 +210,6 @@
         }
       }
     }
-  }
+
 
 </style>

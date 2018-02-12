@@ -8,6 +8,10 @@ const state = {
    * 所有频道列表
    * */
   listTypes: '',
+
+  /**
+   * 当前频道记录的数据。
+   * */
   curListData: {
     data:[],
     page:1

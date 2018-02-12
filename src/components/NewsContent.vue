@@ -1,13 +1,9 @@
 <template>
-
   <div class="detail_container">
-    <!--{{contentData}}-->
     <h1 class="title">{{ contentData.title }}</h1>
     <time class="time">{{ contentData.time }}</time>
     <article ref="content"></article>
   </div>
-
-
 </template>
 
 <script>
@@ -18,15 +14,15 @@
     created() {
       this.getContent()
     },
-    mounted() {
-
-    },
     data() {
       return {
         contentData: null
       }
     },
     methods: {
+      /**
+       * 根据路由的params值，拿到新闻id发送请求获取新闻详细页
+       * */
       getContent() {
         let id = this.$route.params.id;
         let params = {
@@ -38,11 +34,10 @@
             this.$refs.content.innerHTML = res.html;
           })
         }).catch((err) => {
-          console.log(err)
+          alert('网络错误，错误代码:'+ err.toString())
         })
       }
     }
-
   }
 </script>
 
@@ -55,7 +50,6 @@
       font-size: $font-size-large-x;
       line-height: 26px;
       margin: 10px 0;
-
     }
     time.time{
       font-size:$font-size-small;
@@ -64,7 +58,7 @@
     article {
       width: 100%;
       text-align:left;
-      .js_selection_area{
+      .yc_con_txt,.js_selection_area{
         width:100%;
         p{
           width:100%;
@@ -88,7 +82,12 @@
           width:100%;
           border:1px solid #ccc;
           margin:10px auto;
-
+        }
+        p.picIntro{
+          text-align:center;
+          margin-top:0;
+          font-size:$font-size-medium;
+          line-height:18px;
         }
       }
 

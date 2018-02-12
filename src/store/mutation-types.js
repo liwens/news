@@ -3,6 +3,9 @@
  * */
 export const SET_CUR_TYPE = 'SET_CUR_TYPE';
 
+/**
+ * 设置频道列表
+ * */
 export const SET_LIST_TYPES = 'SET_LIST_TYPES';
 
 /**

@@ -80,34 +80,21 @@
           let ul = document.querySelector('.new_lists');
           let window_offsetWidth = window.innerWidth; //屏幕宽度;
           if (dom) {
-            // console.log( ul.getBoundingClientRect().width)
-            // console.log('diff:'+diffWidth)
-            // console.log("宽度" + ul.getBoundingClientRect().width)
-            // console.log('left:' + ul.getBoundingClientRect().left)
-            // console.log('liLeft:'+ dom.offsetLeft)
-            // console.log("目标值：" + targetOffset)
-            // console.log(`计算值： ${targetOffset +  diffWidth + dom.getBoundingClientRect().width}`)
-
-            //结束
-            // if(targetOffset > ul.getBoundingClientRect().width - window_offsetWidth) {
-            //  console.log(ul.getBoundingClientRect().width - window_offsetWidth)
-            //   ul.style.tranform = `translateX(${ul.getBoundingClientRect().width - window_offsetWidth + 40}px)`;
-            //   return;
-            // }
-
-
             let domoffsetWidth = dom.offsetLeft,
               //中间值 =( 屏幕宽度 - li宽度 ) / 2;
               diffWidth = (window_offsetWidth - dom.getBoundingClientRect().width) / 2,
               //目标值 = offset - 中间值
               targetOffset = domoffsetWidth - diffWidth;
-            console.log(ul.getBoundingClientRect())
-            //开始
+            let ul_width = ul.getBoundingClientRect().width;
+            let nav = document.querySelector(".list_nav");
+            ul.style.left = -targetOffset + 'px';
             if (targetOffset < 0) {
               ul.style.left = '0px';
               return;
             }
-            ul.style.left = -targetOffset + 'px'
+            if(ul.offsetLeft <=  window_offsetWidth - ul_width ){
+              ul.style.left = window_offsetWidth - ul_width + "px"
+            }
           }
         })
       }
@@ -117,7 +104,6 @@
 
 <style scoped rel='stylesheet/scss' lang="scss">
   @import "../common/sass/variable";
-
   .list_nav {
     position: fixed;
     left: 0;
@@ -128,19 +114,20 @@
     border-bottom: 1px solid #dddddd;
     height: $nav-height;
     overflow-x: scroll;
+    transition: all .4s;
     background: $color-text-nd;
     &::-webkit-scrollbar {
       display: none;
     }
     .new_lists {
+      transition: all .4s;
       position: absolute;
-      background: #f4f5f6;
+      background: $color-text-nd;
       .new_type {
         display: inline-block;
         text-align: center;
         padding: 10px 16px;
         font-size: 16px;
-
         &.active {
           color: $color-theme;
           -webkit-box-sizing: border-box;
