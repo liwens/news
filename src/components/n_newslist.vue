@@ -1,21 +1,11 @@
 <template>
-  <!--<section-->
-
-    <!--v-infinite-scroll="getnewsData"-->
-    <!--infinite-scroll-disabled="loading"-->
-    <!--infinite-scroll-distanc=20-->
-  <!--&gt;-->
-  <mt-loadmore :bottom-method="getnewsData" :bottom-all-loaded="allLoaded" ref="loadmore" :bottomDistance=20>
-    <section>
-
-
-    <ul>
+  <section v-scroll>
+    <ul class="ul">
       <template v-for="data in curListData.data">
         <li class="detail_list" @click="toNewsContent(data.id)">
           <div class="content">
             <h1 class="title">{{ data.title }}</h1>
             <time class="time">{{ data.time }}</time>
-
           </div>
           <div class="photo" v-if="data.img">
             <img v-lazy="data.img">
@@ -23,9 +13,9 @@
         </li>
       </template>
     </ul>
-    <!--<i class="loading" v-if="loadingIconVis">-->
-      <!--<mt-spinner type="snake" color="rgb(229,150,115)"></mt-spinner>-->
-    <!--</i>-->
+    <i class="loading" v-if="loadingIconVis">
+      <mt-spinner type="snake" color="rgb(229,150,115)"></mt-spinner>
+    </i>
     <mt-popup
       v-model=noData
       position="top"
@@ -33,16 +23,35 @@
 
       <div class="noData">没有数据了...</div>
     </mt-popup>
-    </section>
-  </mt-loadmore>
-
+</section>
 </template>
 
 <script>
+
     import {requestNewList} from '../api/requestNewList'
     import {mapGetters, mapMutations} from 'vuex';
     import * as types from '../store/mutation-types'
     export default {
+      directives: {
+        //滚动加载的自定义指令
+        scroll: {
+          bind: function(el, binding, vnode) {
+              window.addEventListener('scroll',()=> {
+                let scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
+                if(scrollTop + window.innerHeight >= el.clientHeight - 50) {
+                  //判断请求发送标志位，避免重复请求
+                  if(vnode.context.loading) return;
+
+                  //发送请求
+                  vnode.context.getnewsData();
+                }
+              })
+          }
+        }
+      },
+      components: {
+
+      },
       name: "n_newslist",
       data() {
         return {
@@ -58,13 +67,6 @@
         curType: function (newType) {
           this.initData();
           this.getnewsData();
-          //避免当前频道，滚动条被重置
-            console.log("上个频道："+ sessionStorage.getItem('lastType'))
-            console.log("当前频道："+ newType)
-            // if(sessionStorage.getItem('lastType') && sessionStorage.getItem('lastType') !== newType) {
-            //   // alert('重置滚动条')
-            //   this.reCoverScroll();
-            // }
         }
       },
       computed: {
@@ -77,6 +79,13 @@
         ])
       },
       mounted() {
+        window.addEventListener('scroll', function() {
+          console.log('滚动条高度：'+ document.body.scrollTop)
+          console.log('页面高度：'+window.innerHeight)
+          console.log('文档高度：'+document.body.clientHeight )
+          console.log('=========分割线=========')
+        })
+
         if(this.curListData.data.length == 0) {
           this.getnewsData();
         }
@@ -116,13 +125,13 @@
                   this.loading = true;
                   this.loadingIconVis = false;
                   this.allLoaded = true;
-                }, 1000)
+                }, 2000)
                 return;
               }
               this.set_curListData(res)
               this.loading = false;
               this.loadingIconVis = false;
-              this.$refs.loadmore.onBottomLoaded();
+              // this.$refs.loadmore.onBottomLoaded();
             })
           },
         ...mapMutations({
@@ -136,9 +145,8 @@
 <style scoped rel='stylesheet/scss' lang="scss">
   @import "../common/sass/variable";
 
-  section {
-    padding: 0 10px;
-    box-sizing: border-box;
+
+
     .loading {
       text-align: center;
       position: fixed;
@@ -157,8 +165,8 @@
       margin-top: $nav-height;
       width: 100%;
       overflow: auto;
-
-
+      padding: 0 10px;
+      box-sizing: border-box;
       li.detail_list {
         width: 100%;
         height: 100px;
@@ -215,6 +223,6 @@
         }
       }
     }
-  }
+
 
 </style>
