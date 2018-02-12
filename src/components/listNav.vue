@@ -128,13 +128,13 @@
     border-bottom: 1px solid #dddddd;
     height: $nav-height;
     overflow-x: scroll;
-    /*transition: all .4s;*/
+    transition: all .4s;
     background: $color-text-nd;
     &::-webkit-scrollbar {
       display: none;
     }
     .new_lists {
-      transition: left .4s;
+      transition: all .4s;
       position: absolute;
       background: $color-text-nd;
       .new_type {
