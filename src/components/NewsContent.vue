@@ -66,7 +66,8 @@
           line-height: 24px;
           margin:14px auto;
           img{
-            width:100%;
+            width:100% !important;
+            margin: 0 !important;
             height:auto;
             /*margin-left:0;*/
 

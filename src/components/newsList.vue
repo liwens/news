@@ -65,6 +65,7 @@
          * 记录当前频道
          * */
         curType: function (newType) {
+
           this.initData();
           this.getnewsData();
         }
