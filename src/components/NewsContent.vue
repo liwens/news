@@ -69,13 +69,15 @@
             width:100% !important;
             margin: 0 !important;
             height:auto;
-            /*margin-left:0;*/
 
           }
           span.ifengLogo{
             img{
               width:16px !important;
+<<<<<<< HEAD
               height: 16px;
+=======
+>>>>>>> e6b7614531ba7f83badc03e005bcb22ecbb545f1
             }
           }
         }
