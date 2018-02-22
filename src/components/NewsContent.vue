@@ -74,6 +74,7 @@
           span.ifengLogo{
             img{
               width:16px !important;
+              display:none;
             }
           }
         }
