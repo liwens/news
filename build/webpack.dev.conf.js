@@ -28,6 +28,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
         { from: /.*/, to: path.posix.join(config.dev.assetsPublicPath, 'index.html') },
       ],
     },
+    //启用 webpack 的模块热替换特性：
     hot: true,
     contentBase: false, // since we use CopyWebpackPlugin.
     compress: true,

@@ -32,9 +32,22 @@
           this.contentData = res;
           this.$nextTick(() => {
             this.$refs.content.innerHTML = res.html;
+            this.hideCopy()
           })
         }).catch((err) => {
           alert('网络错误，错误代码:'+ err.toString())
+        })
+      },
+      hideCopy() {
+        let strong = document.querySelectorAll('strong');
+        let patt1 = new RegExp('凤凰网')
+        let patt2 = new RegExp('追究法律责任')
+        strong.forEach(el=> {
+          let ret1 = patt1.test(el.innerHTML);
+          let ret2 = patt2.test(el.innerHTML);
+          if(ret1 && ret2) {
+            el.parentNode.removeChild(el);
+          }
         })
       }
     }
@@ -74,10 +87,7 @@
           span.ifengLogo{
             img{
               width:16px !important;
-<<<<<<< HEAD
               height: 16px;
-=======
->>>>>>> e6b7614531ba7f83badc03e005bcb22ecbb545f1
             }
           }
         }
