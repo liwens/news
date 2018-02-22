@@ -87,7 +87,8 @@
           span.ifengLogo{
             img{
               width:16px !important;
-              height: 16px;
+              display:none;
+
             }
           }
         }
