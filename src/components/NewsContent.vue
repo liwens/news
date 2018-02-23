@@ -87,12 +87,16 @@
           span.ifengLogo{
             img{
               width:16px !important;
-              display:none;
-
+              display:none !important;
             }
           }
         }
-
+        span.ifengLogo{
+          img{
+            width:16px !important;
+            display:none !important;
+          }
+        }
         p.detailPic{
           width:100%;
           border:1px solid #ccc;
