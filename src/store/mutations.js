@@ -20,6 +20,9 @@ const mutations = {
       data: [],
       page:1
     };
+  },
+  [types.SET_LOADING_VIS](state, isVis) {
+    state.loadingVis = isVis
   }
 
 }

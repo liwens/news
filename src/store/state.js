@@ -15,7 +15,11 @@ const state = {
   curListData: {
     data:[],
     page:1
-  }
+  },
+  /**
+   * 控制列表页进入详情页的过渡动画的标志位
+   * */
+  loadingVis: false
 }
 
 export default state;

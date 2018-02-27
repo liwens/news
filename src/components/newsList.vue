@@ -20,7 +20,6 @@
       v-model=noData
       position="top"
       popup-transition="popup-fade">
-
       <div class="noData">没有数据了...</div>
     </mt-popup>
   </section>
@@ -95,6 +94,7 @@
        * 前往新闻详细页，传入新闻ID值
        * */
       toNewsContent(id) {
+        this.set_loadingVis(true);
         this.$router.push({path: `/content/${id}`})
       },
       /**
@@ -133,8 +133,12 @@
       },
       ...mapMutations({
         set_curListData: types.SET_CUR_LIST_DATA,
-        remove_curListData: types.REMOVE_CUR_LIST_DATA
-      })
+        remove_curListData: types.REMOVE_CUR_LIST_DATA,
+        set_loadingVis : types.SET_LOADING_VIS
+      }),
+      destroyed() {
+
+      }
     }
   }
 </script>
