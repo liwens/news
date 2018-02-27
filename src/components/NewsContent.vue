@@ -42,9 +42,10 @@
       get_ad() {
         let ad_iframe = document.createElement("iframe");
         ad_iframe.src="static/ad.html";
-        ad_iframe.border = 0;
+        ad_iframe.border = "0";
+        ad_iframe.frameBorder = "0";
         ad_iframe.width = "100%";
-        ad_iframe.height = "100";
+        ad_iframe.height = "120";
         ad_iframe.scrolling= "no";
         document.body.appendChild(ad_iframe);
       },
