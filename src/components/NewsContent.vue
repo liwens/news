@@ -16,8 +16,7 @@
     name: "news-content",
     created() {
      this.get_ad();
-      this.getContent();
-    },
+      this.getContent();    },
     data() {
       return {
         contentData: {},
@@ -28,6 +27,7 @@
     },
     methods: {
       get_ad() {
+
         // let ad_iframe = document.createElement("iframe");
         // ad_iframe.src="static/ad.html";
         // ad_iframe.border = 0;
@@ -43,7 +43,6 @@
           let adjs = document.createElement('script');
           adjs.src='http://nads.wuaiso.com/newswap/wap/js/asyunion.js ';
           document.body.appendChild(adjs);
-
 
       },
       /**
