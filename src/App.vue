@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <i class="loading" v-if="loadingVis">
-      <mt-spinner type="snake" color="rgb(229,150,115)"></mt-spinner>
+      <mt-spinner type="triple-bounce" color="rgb(38,162,255)"></mt-spinner>
     </i>
       <router-view/>
   </div>

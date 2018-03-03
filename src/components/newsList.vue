@@ -14,7 +14,7 @@
       </template>
     </ul>
     <i class="loading" v-if="loadingIconVis">
-      <mt-spinner type="snake" color="rgb(229,150,115)"></mt-spinner>
+      <mt-spinner type="triple-bounce" color="rgb(38,162,255)"></mt-spinner>
     </i>
     <mt-popup
       v-model=noData

@@ -1,21 +1,9 @@
 <template>
   <div class="detail_container" >
-    <!--<i class="loading" v-if="!loading">-->
-      <!--<mt-spinner type="snake" color="rgb(229,150,115)"></mt-spinner>-->
-    <!--</i>-->
     <h1 class="title">{{ contentData.title }}</h1>
     <time class="time">{{ contentData.time }}</time>
     <article ref="art"></article>
-    <!--<div class="ad">-->
-      <!--<script type="text/javascript">-->
-        <!--var wososspconfig = {-->
-          <!--aid: "964"-->
-        <!--};-->
-      <!--</script>-->
-      <!--<script type="text/javascript" src="http://sspj.woso.cn/sitegc/wososearch_ssp.js" ></script>-->
-    <!--</div>-->
-
-    <div id="ad" class="ad" ref="ad"></div>
+    <div id="ws-zl-dybanner263"></div>
   </div>
 </template>
 
@@ -40,13 +28,23 @@
     },
     methods: {
       get_ad() {
-        let ad_iframe = document.createElement("iframe");
-        ad_iframe.src="static/ad.html";
-        ad_iframe.border = 0;
-        ad_iframe.width = "100%";
-        ad_iframe.height = "100";
-        ad_iframe.scrolling= "no";
-        document.body.appendChild(ad_iframe);
+        // let ad_iframe = document.createElement("iframe");
+        // ad_iframe.src="static/ad.html";
+        // ad_iframe.border = 0;
+        // ad_iframe.width = "100%";
+        // ad_iframe.height = "100";
+        // ad_iframe.scrolling= "no";
+        // document.body.appendChild(ad_iframe);
+
+        // var ws_dy='zl-dybanner263';
+        // var ws_width =300;
+        // var ws_height=80;
+
+          let adjs = document.createElement('script');
+          adjs.src='http://nads.wuaiso.com/newswap/wap/js/asyunion.js ';
+          document.body.appendChild(adjs);
+
+
       },
       /**
        * 根据路由的params值，拿到新闻id发送请求获取新闻详细页
@@ -66,9 +64,9 @@
             this.hideCopy()
             //隐藏过度动画
             this.set_loadingVis(false);
-            // this.lazyObj = new lazy({
-            //   imgs:document.querySelectorAll('img')
-            // });
+            this.lazyObj = new lazy({
+              imgs:document.querySelectorAll('img')
+            });
           })
         }).catch((err) => {
           alert('网络错误，错误代码:'+ err.toString())
