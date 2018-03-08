@@ -4,18 +4,6 @@
     <h1 class="title">{{ contentData.title }}</h1>
     <time class="time">{{ contentData.time }}</time>
     <article ref="art"></article>
-    <span class="icon_container">
-      <i class="iconfont icon-dianzanb" @click="onZan" v-if="!isZan"></i>
-      <i class="iconfont icon-28dianzanfill" @click="onZan" v-else></i>
-      <div class="zantext">点赞</div>
-    </span>
-
-    <div id="comment_container">
-      <label for="textinput">评论</label>
-      <input type="input" @focus.stop="onfouc" name="textinput" ref="textinput" v-model="textinput">
-      <button type="default" size="small" @click="onsubmit">提交</button>
-      <div class="tips">优质评论我们将优先展示</div>
-    </div>
   </div>
 </template>
 
@@ -47,28 +35,6 @@
 
     },
     methods: {
-      onsubmit() {
-        if(this.textinput == ('')) {
-          Toast('请输入内容');
-          return
-        }
-        Toast('您的评论已提交审核...');
-        this.$refs.textinput.value = ''
-        this.inputFouc = false;
-      },
-      onZan() {
-        this.isZan = !this.isZan
-      },
-      onblur() {
-        if(this.inputFouc) {
-          this.inputFouc = false;
-        }
-      },
-      onfouc() {
-        if(!this.inputFouc) {
-          this.inputFouc = true;
-        }
-      },
       /**
        * 请求广告
        * */
@@ -161,7 +127,8 @@
 <style  rel='stylesheet/scss' lang="scss">
   @import "../common/sass/variable";
   .detail_container {
-    padding: 10px 20px 100px 10px;
+   padding: 5px 10px;
+
     .loading{
       position: absolute;
       top: 50%;
@@ -184,8 +151,8 @@
         width:100%;
         p{
           width:100%;
-          font-size: $font-size-medium-x;
-          line-height: 24px;
+          font-size: $font-size-large;
+          line-height: 28px;
           margin:14px auto;
           img{
             width:100% !important;
@@ -208,7 +175,6 @@
         }
         p.detailPic{
           width:100%;
-          border:1px solid #ccc;
           margin:10px auto;
         }
         p.picIntro{
@@ -219,75 +185,6 @@
         }
       }
     }
-    #comment_container{
-      position: fixed;
-      left: 0;
-      bottom: 0;
-      width: 100%;
-      background-color: #eee;
-      overflow: hidden;
-      height: 108px;
 
-      line-height: 54px;
-      label{
-        padding-left: 35px;
-        width: 30px;
-        margin-left: 10px;
-      }
-
-      input[type='input']{
-        border-radius: 4px;
-        border: 1px solid #eee;
-        height: 34px;
-        margin: 0 5px;
-        width: calc(100% - 175px);
-        padding-left:5px;
-      }
-
-      button{
-        width: 60px;
-        text-align: center;
-        float: right;
-        margin-right: 10px;
-        margin-top: 13px;
-        height: 32px;
-        border: none;
-        border-radius: 4px;
-        color: #ffffff;
-        background-color: #999999;
-      }
-
-      .tips{
-        text-align: center;
-        color: #999999;
-        padding-left: 35px;
-      }
-    }
-  }
-  .onzan{
-   color: #d4221c !important;
-  }
-
-  .icon_container{
-    position: fixed;
-    top: 10%;
-    right: 10px;
-    i{
-      color: #b8bbbf;
-      width: 50px;
-      font-size: 33px;
-    }
-    .zantext{
-      display: block;
-      background-color: #eeeeee;
-      padding: 8px;
-      border-radius: 5px;
-      font-size: 10px;
-      color: red;
-      margin-right: 2px;
-    }
-    .icon-28dianzanfill {
-      color: red;
-    }
   }
 </style>

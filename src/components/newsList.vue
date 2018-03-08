@@ -190,25 +190,25 @@
       display: flex;
       justify-content: space-between;
       border-bottom: 1px solid #eaeaea;
-      padding: 8px 0;
+      padding: 5px 0;
       /*padding-top:20px;*/
       .content {
         max-width: 90%;
         margin-top: 10px;
         position: relative;
         .title {
-          font-size: $font-size-medium-x;
+          font-size: $font-size-large;
           line-height: 22px;
           height: 44px;
+          font-weight: 500;
           overflow: hidden;
           text-overflow: ellipsis;
           word-break: break-all;
           -webkit-box-orient: vertical;
           -webkit-line-clamp: 2;
         }
-
         .time {
-          font-size: $font-size-medium;
+          font-size: $font-size-small;
           color: #b3b3b3;
           line-height: 16px;
           position: absolute;
@@ -223,7 +223,6 @@
         img {
           width: 85px;
           height: 85px;
-          border-radius: 5px;
         }
       }
     }
