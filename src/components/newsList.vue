@@ -1,7 +1,8 @@
 <template>
   <section v-scroll>
-    <ul class="ul">
-      <template v-for="data in curListData.data">
+    <ul id="list_container">
+      <template v-for="(data, index) in curListData.data">
+        <li v-if="index % 10 == 0" class="ad_list"><div id="ws-zl-dybanner263" ></div></li>
         <li class="detail_list" @click="toNewsContent(data.id)">
           <div class="content">
             <h1 class="title">{{ data.title }}</h1>
@@ -60,7 +61,6 @@
        * 记录当前频道
        * */
       curType: function (newType) {
-
         this.initData();
         this.getnewsData();
       }
@@ -75,8 +75,22 @@
       if (this.curListData.data.length == 0) {
         this.getnewsData();
       }
+      // this.get_ad();
     },
     methods: {
+      remove_ad() {
+        let last_ad_con =  document.getElementById('ws-zl-dybanner263');
+        let id = last_ad_con.id;
+        last_ad_con.setAttribute('id', id+1);
+      },
+      get_ad() {
+        let adjs = document.createElement('script');
+        adjs.src='http://nads.wuaiso.com/newswap/wap/js/asyunion.js ';
+        document.body.appendChild(adjs);
+        let ad_con = document.createElement('div');
+        ad_con.id = 'ws-zl-dybanner263';
+
+      },
       scrollLoad() {
         //滚动条高度（页面被卷去高度）
         let scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
@@ -129,6 +143,9 @@
           this.set_curListData(res)
           this.loading = false;
           this.loadingIconVis = false;
+
+          // this.remove_ad();
+          // this.get_ad();
         })
       },
       ...mapMutations({
@@ -161,7 +178,7 @@
     background-color: $color-text-nd;
   }
 
-  ul {
+ #list_container {
     margin-top: $nav-height;
     width: 100%;
     overflow: auto;

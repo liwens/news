@@ -33,7 +33,7 @@ Vue.component(Spinner.name, Spinner)
 Vue.component(Popup.name, Popup)
 
 Vue.component(Loadmore.name, Loadmore);
-
+import ('../src/assets/font/iconfont.css')
 
 Vue.use(VueLazyload, {
   loading: '../static/download.gif'
