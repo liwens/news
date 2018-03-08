@@ -1,6 +1,6 @@
 <template>
   <div class="detail_container" >
-    <!--<div id="ws-zl-dybanner263"></div>-->
+    <div id="ws-zl-dybanner263"></div>
     <h1 class="title">{{ contentData.title }}</h1>
     <time class="time">{{ contentData.time }}</time>
     <article ref="art"></article>

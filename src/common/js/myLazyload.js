@@ -22,7 +22,7 @@ export default class lazyLoad {
       if (imgs[i].offsetTop < seeHeight + scrollTop) {
         if (imgs[i].getAttribute('src') == '') {
           //替换过度的动画
-          imgs[i].src = require('../../../static/download.gif');
+          imgs[i].src = require('../../../static/loading.png');
           let oImg = new Image();
           oImg.src = imgs[i].getAttribute('data-src');
           oImg.onload = function () {

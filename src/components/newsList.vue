@@ -2,7 +2,9 @@
   <section v-scroll>
     <ul id="list_container">
       <template v-for="(data, index) in curListData.data">
+        <!--ad-->
         <li v-if="index % 10 == 0" class="ad_list"><div id="ws-zl-dybanner263" ></div></li>
+        <!--ad-->
         <li class="detail_list" @click="toNewsContent(data.id)">
           <div class="content">
             <h1 class="title">{{ data.title }}</h1>
@@ -75,21 +77,24 @@
       if (this.curListData.data.length == 0) {
         this.getnewsData();
       }
-      // this.get_ad();
     },
     methods: {
+      /**
+       * 清除上一条广告的id
+       * */
       remove_ad() {
         let last_ad_con =  document.getElementById('ws-zl-dybanner263');
-        let id = last_ad_con.id;
-        last_ad_con.setAttribute('id', id+1);
+        if(last_ad_con) {
+          last_ad_con.removeAttribute('id');
+        }
       },
+      /**
+       * 加载广告
+       * */
       get_ad() {
-        let adjs = document.createElement('script');
-        adjs.src='http://nads.wuaiso.com/newswap/wap/js/asyunion.js ';
-        document.body.appendChild(adjs);
-        let ad_con = document.createElement('div');
-        ad_con.id = 'ws-zl-dybanner263';
-
+          let adjs = document.createElement('script');
+          adjs.src='http://nads.wuaiso.com/newswap/wap/js/asyunion.js ';
+          document.body.appendChild(adjs);
       },
       scrollLoad() {
         //滚动条高度（页面被卷去高度）
@@ -143,7 +148,7 @@
           this.set_curListData(res)
           this.loading = false;
           this.loadingIconVis = false;
-
+          //加载广告
           // this.remove_ad();
           // this.get_ad();
         })
@@ -217,12 +222,12 @@
       }
       .photo {
         margin-left: 10px;
-        width: 85px;
-        height: 85px;
+        /*width: 85px;*/
+        /*height: 85px;*/
         align-self: center;
         img {
-          width: 85px;
-          height: 85px;
+          width: 110px;
+          height: 75px;
         }
       }
     }
