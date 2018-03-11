@@ -3,7 +3,7 @@
     <ul id="list_container">
       <template v-for="(data, index) in curListData.data">
         <!--ad-->
-        <li v-if="index % 10 == 0" class="ad_list"><div id="ws-zl-dybanner263" ></div></li>
+        <li v-if="index % 20 == 0" class="ad_list"><div id="ws-zl-dybanner263" ></div></li>
         <!--ad-->
         <li class="detail_list" @click="toNewsContent(data.id)">
           <div class="content">
@@ -149,8 +149,8 @@
           this.loading = false;
           this.loadingIconVis = false;
           //加载广告
-          // this.remove_ad();
-          // this.get_ad();
+          this.remove_ad();
+          this.get_ad();
         })
       },
       ...mapMutations({

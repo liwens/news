@@ -12,14 +12,15 @@
   import {mapMutations} from 'vuex'
   import * as types from '../store/mutation-types'
   import lazy from '../common/js/myLazyload'
-  import { Toast } from 'mint-ui';
+  import { Toast,MessageBox } from 'mint-ui';
+
   export default {
     name: "news-content",
     created() {
-     // this.get_ad().then(()=> {
-     //   this.change_ad_container_id();
-     //   this.add_ad()
-     // });
+     this.get_ad().then(()=> {
+       this.change_ad_container_id();
+       this.add_ad()
+     });
      this.getContent();
     },
     data() {
@@ -32,9 +33,35 @@
       }
     },
     mounted() {
-
+      this.check();
     },
     methods: {
+      /**
+       * 检测低版本浏览器，并给出提示
+       * */
+      check() {
+        let nav = window.navigator;
+        let userAgent = nav.userAgent;
+        let v = userAgent.match(/Chrome\/(.*?)+/g);
+        if(v) {
+          v =  v[0].replace('Chrome/', "");
+          if(v) {
+            v = parseInt(v)
+            if(v < 50 && !sessionStorage.getItem('donshow')) {
+              MessageBox.confirm('检测到你的浏览器版本过低，如不能正常浏览，请升级或更换浏览器' +
+                '（点击取消，不再显示这条内容）').then(()=>{
+              }).catch((err)=> {
+               sessionStorage.setItem('donshow', 1)
+              })
+            }
+          }
+        }
+
+
+
+
+
+      },
       /**
        * 请求广告
        * */
