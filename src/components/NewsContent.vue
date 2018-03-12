@@ -17,10 +17,10 @@
   export default {
     name: "news-content",
     created() {
-     this.get_ad().then(()=> {
-       this.change_ad_container_id();
-       this.add_ad()
-     });
+     // this.get_ad().then(()=> {
+     //   this.change_ad_container_id();
+     //   this.add_ad()
+     // });
      this.getContent();
     },
     data() {
