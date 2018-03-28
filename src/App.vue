@@ -8,12 +8,18 @@
 </template>
 
 <script>
-  import {mapGetters} from 'vuex';
+  import {mapGetters, mapMutations} from 'vuex';
+  import * as types from './store/mutation-types'
 export default {
   name: 'App',
   data() {
     return {
 
+    }
+  },
+  mounted() {
+    if(localStorage.getItem('curType')){
+      this.set_curType(localStorage.getItem('curType'));
     }
   },
   computed: {
@@ -23,7 +29,9 @@ export default {
 
   },
   methods: {
-
+    ...mapMutations({
+      set_curType: types.SET_CUR_TYPE
+    })
   }
 }
 </script>
@@ -45,5 +53,3 @@ export default {
   overflow: hidden;
 }
 </style>
-
-

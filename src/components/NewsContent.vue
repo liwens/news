@@ -1,31 +1,34 @@
 <template>
   <div class="detail_container" >
-    <div id="ws-zl-dybanner263"></div>
-    <h1 class="title">{{ contentData.title }}</h1>
-    <time class="time">{{ contentData.time }}</time>
+    <h1 class="title">{{ newsData.title }}</h1>
+    <time class="time">{{ newsData.time }}</time>
     <article ref="art"></article>
+    <div id="ws-zl-dybanner263"></div>
+    <content-in-list></content-in-list>
+
   </div>
 </template>
 
 <script>
   import {requestNewContent} from '../api/requestNewsContent'
-  import {mapMutations} from 'vuex'
+  import {mapMutations,mapGetters} from 'vuex'
   import * as types from '../store/mutation-types'
   import lazy from '../common/js/myLazyload'
   import { Toast,MessageBox } from 'mint-ui';
+  import ContentInList from './contentInList';
 
   export default {
     name: "news-content",
+    components: {
+      ContentInList
+    },
     created() {
-     // this.get_ad().then(()=> {
-     //   this.change_ad_container_id();
-     //   this.add_ad()
-     // });
-     this.getContent();
+      this.get_ad();
+      this.getContent();
     },
     data() {
       return {
-        contentData: {},
+        newsData: {},
         lazyObj : null,
         inputFouc: false,
         isZan: false,
@@ -34,6 +37,22 @@
     },
     mounted() {
       this.check();
+    },
+    computed: {
+      ...mapGetters([
+        'contentData'
+      ])
+    },
+    watch: {
+      contentData:function(newData) {
+        this.newsData = newData;
+        this.$refs.art.innerHTML = newData.html.replace(/src/g, 'src = "" data-src');
+        this.hideCopy();
+        new lazy({
+          imgs:document.querySelectorAll('img')
+        });
+        this.setScrollTop();
+      }
     },
     methods: {
       /**
@@ -56,19 +75,11 @@
             }
           }
         }
-
-
-
-
-
       },
       /**
        * 请求广告
        * */
       get_ad() {
-        // var ws_dy='zl-dybanner263';
-        // var ws_width =300;
-        // var ws_height=80;
        return new Promise((resolve, reject)=> {
          let adjs = document.createElement('script');
          adjs.src='http://nads.wuaiso.com/newswap/wap/js/asyunion.js ';
@@ -77,7 +88,6 @@
            return resolve();
          }
         })
-
       },
       /**
        * 修改第一个广告id
@@ -101,10 +111,11 @@
         let windowHeight = window.innerHeight;
         let bodyHeight = document.body.scrollHeight ||  document.documentElement.scrollHeight;
 
-        window.addEventListener('scroll', function () {
-
-        })
+        // window.addEventListener('scroll', function () {
+        //
+        // })
       },
+
       /**
        * 根据路由的params值，拿到新闻id发送请求获取新闻详细页
        * */
@@ -113,11 +124,13 @@
         let params = {
           id
         };
-
         //显示过度动画
         this.set_loadingVis(true);
         requestNewContent(params).then((res) => {
-          this.contentData = res;
+          // this.newsData = res;
+          // console.log(res);
+          this.set_content_data(res);
+
           this.$nextTick(() => {
             this.$refs.art.innerHTML = res.html.replace(/src/g, 'src = "" data-src');
             this.hideCopy();
@@ -127,11 +140,15 @@
               imgs:document.querySelectorAll('img')
             });
           })
+
         }).catch((err) => {
           alert('网络错误，错误代码:'+ err.toString())
         })
       },
-
+      setScrollTop() {
+        document.body.scrollTop = 0 +'px'
+        document.documentElement.scrollTop = 0 + 'px'
+      },
       hideCopy() {
         let strong = document.querySelectorAll('strong');
         let patt1 = new RegExp('凤凰网')
@@ -145,7 +162,8 @@
         })
       },
       ...mapMutations({
-        set_loadingVis : types.SET_LOADING_VIS
+        set_loadingVis : types.SET_LOADING_VIS,
+        set_content_data: types.SET_CONTENT_DATA
       }),
     }
   }
@@ -179,11 +197,13 @@
         p{
           width:100%;
           font-size: $font-size-large;
-          line-height: 28px;
+          line-height: 30px;
           margin:14px auto;
+          font-weight: 400;
           img{
             width:100% !important;
-            margin: 0 !important;
+            /*margin: 0 !important;*/
+            margin: 5px 0;
             height:auto;
 
           }

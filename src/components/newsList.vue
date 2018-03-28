@@ -1,7 +1,7 @@
 <template>
   <section v-scroll>
     <ul id="list_container">
-      <template v-for="(data, index) in curListData.data">
+      <template v-for="(data, index) in curListData">
         <!--ad-->
         <li v-if="index % 10 == 0" class="ad_list"><div id="ws-zl-dybanner263" ></div></li>
         <!--ad-->
@@ -70,11 +70,12 @@
     computed: {
       ...mapGetters([
         'curType',
-        'curListData'
+        'curListData',
+        'listPage'
       ])
     },
     mounted() {
-      if (this.curListData.data.length == 0) {
+      if (this.curListData.length == 0) {
         this.getnewsData();
       }
     },
@@ -113,6 +114,7 @@
        * 前往新闻详细页，传入新闻ID值
        * */
       toNewsContent(id) {
+        sessionStorage.setItem('donLoading', 'don');
         this.set_loadingVis(true);
         this.$router.push({path: `/content/${id}`})
       },
@@ -128,10 +130,10 @@
        * */
       getnewsData() {
         let params = {
-          page: this.curListData.page,
+          page: this.listPage,
           type: this.curType
         };
-
+        console.log(this.listPage)
         if (this.curType == '') return
         this.loading = true
         this.loadingIconVis = true;
@@ -139,24 +141,27 @@
           //没有数据
           if (res.length == 0) {
             this.noData = true;
+            this.loadingIconVis = false;
             setTimeout(() => {
               this.noData = false;
-              this.loadingIconVis = false;
+
             }, 2000)
             return;
           }
-          this.set_curListData(res)
+          this.set_curListData(res);
+          this.set_list_page()
           this.loading = false;
           this.loadingIconVis = false;
           //加载广告
-          // this.remove_ad();
-          // this.get_ad();
+             this.remove_ad();
+             this.get_ad();
         })
       },
       ...mapMutations({
         set_curListData: types.SET_CUR_LIST_DATA,
         remove_curListData: types.REMOVE_CUR_LIST_DATA,
-        set_loadingVis : types.SET_LOADING_VIS
+        set_loadingVis : types.SET_LOADING_VIS,
+        set_list_page : types.SET_LIST_PAGE
       }),
       destroyed() {
 

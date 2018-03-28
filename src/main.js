@@ -36,7 +36,7 @@ Vue.component(Loadmore.name, Loadmore);
 import ('../src/assets/font/iconfont.css')
 
 Vue.use(VueLazyload, {
-  loading: '../static/loading.jpg'
+  loading: require('../static/loading.jpg')
 })
 
 Vue.config.productionTip = false

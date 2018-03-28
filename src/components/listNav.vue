@@ -12,7 +12,6 @@
   import {requestTypeList} from '../api/requestTypeList';
   import {mapMutations, mapGetters} from 'vuex';
   import * as types from '../store/mutation-types';
-
   export default {
     name: "list-nav",
     data() {
