@@ -18,14 +18,8 @@
       </ul>
       <i class="loading" v-if="loadingIconVis">
         <mt-spinner type="triple-bounce" color="rgb(38,162,255)"></mt-spinner>
-
       </i>
-      <mt-popup
-        v-model=noData
-        position="top"
-        popup-transition="popup-fade">
-        <div class="noData">没有数据了...</div>
-      </mt-popup>
+
     </section>
 </template>
 
@@ -33,6 +27,7 @@
     import {mapGetters, mapMutations} from 'vuex'
     import {requestNewList} from '../api/requestNewList'
     import {requestNewContent} from '../api/requestNewsContent'
+    import {requestRandomList} from '../api/requestRandomList'
     import * as types from '../store/mutation-types'
     export default {
       name: "content-in-list",
@@ -51,10 +46,10 @@
       },
       data() {
         return {
-          noData : false,
           loading: false,
           loadingIconVis:false,
-          listData: []
+          listData: [],
+          isUseRandomAPI: false
         }
       },
       computed: {
@@ -92,11 +87,9 @@
          * */
         get_ad() {
           let last_ad_con =  document.getElementById('ws-zl-dybanner263');
-          if(last_ad_con) {
-            let adjs = document.createElement('script');
-            adjs.src='http://nads.wuaiso.com/newswap/wap/js/asyunion.js ';
-            document.body.appendChild(adjs);
-          }
+          let adjs = document.createElement('script');
+          adjs.src='http://nads.wuaiso.com/newswap/wap/js/asyunion.js ';
+          document.body.appendChild(adjs);
         },
         /**
          * 请求数据
@@ -117,26 +110,37 @@
             this.loadingIconVis = true;
           }
           requestNewList(params).then((res) => {
-            //没有数据
             this.loadingIconVis = false;
+
+            //没有数据,使用随机接口
             if (res.length == 0) {
-              this.noData = true;
-              this.loadingIconVis = false;
-              setTimeout(() => {
-                this.noData = false;
-              }, 2000)
+              this.isUseRandomAPI = true;
+              this.getRandomList();
               return;
-            }
+            };
+
             this.listData = this.listData.concat(res);
             // this.set_curListData(res);
             this.set_list_page();
             this.loading = false;
 
               //加载广告
-               this.remove_ad();
-               this.get_ad();
+               // this.remove_ad();
+               // this.get_ad();
           })
 
+        },
+
+        //随机列表数据
+        getRandomList() {
+          this.loading = true;
+          requestRandomList()
+          .then((res)=> {
+            this.loading = false;
+            this.listData = this.listData.concat(res);
+          }).catch((err)=> {
+
+          })
         },
         scrollLoad() {
 
@@ -149,14 +153,14 @@
             //判断请求发送标志位，避免重复请求
             if (this.loading) return;
             //发送请求
-              this.getnewsListData();
+            this.isUseRandomAPI ? this.getRandomList() : this.getnewsListData();
+
           }
         },
         setScrollTop() {
           document.body.scrollTop = 0 + 'px';
           document.documentElement.scrollTop = 0 + 'px';
           window.scrollTo(0,0);
-
         },
         NewsContent(id) {
           sessionStorage.setItem('donLoading', 'don');

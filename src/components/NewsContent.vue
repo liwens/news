@@ -23,7 +23,9 @@
       ContentInList
     },
     created() {
-      this.get_ad();
+      //加载广告
+      // this.get_ad();
+      
       this.getContent();
     },
     data() {
@@ -45,13 +47,17 @@
     },
     watch: {
       contentData:function(newData) {
+        console.log(newData);
         this.newsData = newData;
         this.$refs.art.innerHTML = newData.html.replace(/src/g, 'src = "" data-src');
         this.hideCopy();
         new lazy({
           imgs:document.querySelectorAll('img')
         });
-        this.setScrollTop();
+        this.$nextTick(()=> {
+          this.setScrollTop();
+        })
+
       }
     },
     methods: {
@@ -146,8 +152,9 @@
         })
       },
       setScrollTop() {
-        document.body.scrollTop = 0 +'px'
-        document.documentElement.scrollTop = 0 + 'px'
+        document.body.scrollTop = 0 +'px';
+        document.documentElement.scrollTop = 0 + 'px';
+        window.scrollTo(0,0);
       },
       hideCopy() {
         let strong = document.querySelectorAll('strong');
@@ -198,7 +205,7 @@
           width:100%;
           font-size: $font-size-large;
           line-height: 30px;
-          margin:14px auto;
+          margin:18px auto;
           font-weight: 400;
           img{
             width:100% !important;
